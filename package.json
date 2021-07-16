@@ -1,0 +1,31 @@
+{
+  "name": "revolt-desktop",
+  "version": "1.0.0",
+  "description": "Revolt desktop app",
+  "author": {
+    "name": "Paul Makles",
+    "url": "https://insrt.uk",
+    "email": "me@insrt.uk"
+  },
+  "homepage": "https://revolt.chat",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:linux": "electron-builder -l",
+    "build:windows": "electron-builder -w appx"
+  },
+  "repository": "https://gitlab.insrt.uk/revolt/desktop",
+  "devDependencies": {
+    "electron": "^13.1.6",
+    "electron-builder": "^22.11.7"
+  },
+  "build": {
+    "appId": "chat.revolt.app",
+    "mac": {
+      "category": "public.app-category.social-networking"
+    },
+    "linux": {
+      "category": "Network"
+    }
+  }
+}
