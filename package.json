@@ -26,6 +26,12 @@
     },
     "linux": {
       "category": "Network"
+    },
+    "appx": {
+      "applicationId": "Revolt Chat",
+      "identityName": "40345RevoltCommunications.revolt.chat",
+      "publisher": "CN=B040CC7E-0016-4AF5-957F-F8977A6CFA3B",
+      "publisherDisplayName": "Revolt Communications"
     }
   }
 }
