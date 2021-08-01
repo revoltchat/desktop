@@ -17,27 +17,44 @@ class Config {
 
     setFrame(frame: boolean) {
         this.frame = frame;
-        ipcRenderer.send('configSet', { frame })
+        ipcRenderer.send('set', { frame })
     }
 
     setBuild(build: Build) {
         this.build = build;
-        ipcRenderer.send('configSet', { build })
+        ipcRenderer.send('set', { build })
     }
 }
 
 let config = new Config();
-ipcRenderer.on('configLoad', (_, data) => config.apply(data));
+ipcRenderer.on('config', (_, data) => config.apply(data));
 
 contextBridge.exposeInMainWorld("isNative", true);
+contextBridge.exposeInMainWorld("nativeVersion", "1.0.0");
 contextBridge.exposeInMainWorld(
     "native", {
+        min: () => ipcRenderer.send('min'),
+        max: () => ipcRenderer.send('max'),
         close: () => ipcRenderer.send('close'),
         reload: () => ipcRenderer.send('reload'),
+        relaunch: () => ipcRenderer.send('relaunch'),
 
         getConfig: () => config,
         setFrame: (v: boolean) => config.setFrame(v),
         setBuild: (v: Build) => config.setBuild(v),
+
+        getAutoStart: () => new Promise(resolve => {
+            ipcRenderer.send('getAutoStart')
+            ipcRenderer.on('autoStart', (_, arg) => resolve(arg))
+        }),
+        enableAutoStart: () => new Promise(resolve => {
+            ipcRenderer.send('setAutoStart', true)
+            ipcRenderer.on('autoStart', (_, arg) => resolve(arg))
+        }),
+        disableAutoStart: () => new Promise(resolve => {
+            ipcRenderer.send('setAutoStart', false)
+            ipcRenderer.on('autoStart', (_, arg) => resolve(arg))
+        })
     }
 );
 

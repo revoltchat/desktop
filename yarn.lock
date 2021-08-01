@@ -71,6 +71,11 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
+"@types/auto-launch@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/@types/auto-launch/-/auto-launch-5.0.2.tgz#4970f01e5dd27572489b7fe77590204a19f86bd0"
+  integrity sha512-b03X09+GCM9t6AUECpwA2gUPYs8s5tJHFJw92sK8EiJ7G4QNbsHmXV7nfCfP6G6ivtm230vi4oNfe8AzRgzxMQ==
+
 "@types/debug@^4.1.5":
   version "4.1.6"
   resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.6.tgz#0b7018723084918a865eff99249c490505df2163"

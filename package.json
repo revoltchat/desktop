@@ -13,13 +13,14 @@
     "build:bundle": "tsc",
     "watch:bundle": "tsc-watch",
     "start": "electron .",
-    "build:linux": "electron-builder -l",
+    "build:windows:nsis": "electron-builder -w nsis",
     "build:linux:appimage": "electron-builder -l AppImage",
-    "test:linux:appimage": "electron-builder -l AppImage && dist/revolt-desktop-1.0.0.AppImage",
+    "test:linux:appimage": "dist/revolt-desktop-1.0.0.AppImage",
     "build:windows": "electron-builder -w appx"
   },
   "repository": "https://gitlab.insrt.uk/revolt/desktop",
   "devDependencies": {
+    "@types/auto-launch": "^5.0.2",
     "electron": "^13.1.6",
     "electron-builder": "^22.11.7",
     "tsc-watch": "^4.4.0",
