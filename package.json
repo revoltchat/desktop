@@ -8,16 +8,22 @@
     "email": "me@insrt.uk"
   },
   "homepage": "https://revolt.chat",
-  "main": "main.js",
+  "main": "bundle/main.js",
   "scripts": {
+    "build:bundle": "tsc",
+    "watch:bundle": "tsc-watch",
     "start": "electron .",
     "build:linux": "electron-builder -l",
+    "build:linux:appimage": "electron-builder -l AppImage",
+    "test:linux:appimage": "electron-builder -l AppImage && dist/revolt-desktop-1.0.0.AppImage",
     "build:windows": "electron-builder -w appx"
   },
   "repository": "https://gitlab.insrt.uk/revolt/desktop",
   "devDependencies": {
     "electron": "^13.1.6",
-    "electron-builder": "^22.11.7"
+    "electron-builder": "^22.11.7",
+    "tsc-watch": "^4.4.0",
+    "typescript": "^4.3.5"
   },
   "build": {
     "appId": "chat.revolt.app",
@@ -33,5 +39,9 @@
       "publisher": "CN=B040CC7E-0016-4AF5-957F-F8977A6CFA3B",
       "publisherDisplayName": "Revolt Communications"
     }
+  },
+  "dependencies": {
+    "auto-launch": "^5.0.5",
+    "electron-store": "^8.0.0"
   }
 }
