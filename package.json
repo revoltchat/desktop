@@ -31,6 +31,7 @@
   },
   "build": {
     "appId": "chat.revolt.app",
+    "productName": "Revolt",
     "mac": {
       "target": [
         "zip"
@@ -50,7 +51,8 @@
       ]
     },
     "appx": {
-      "applicationId": "Revolt Chat",
+      "displayName": "Revolt Chat",
+      "applicationId": "revolt.chat",
       "identityName": "40345RevoltCommunications.revolt.chat",
       "publisher": "CN=B040CC7E-0016-4AF5-957F-F8977A6CFA3B",
       "publisherDisplayName": "Revolt Communications"
@@ -61,6 +63,7 @@
   },
   "dependencies": {
     "auto-launch": "^5.0.5",
-    "electron-store": "^8.0.0"
+    "electron-store": "^8.0.0",
+    "electron-winstore-auto-launch": "^2.0.6"
   }
 }
