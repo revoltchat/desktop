@@ -2,6 +2,7 @@
   "name": "revolt-desktop",
   "version": "1.0.0",
   "description": "Revolt desktop app",
+  "private": true,
   "author": {
     "name": "Paul Makles",
     "url": "https://insrt.uk",
@@ -13,14 +14,16 @@
     "build:bundle": "tsc",
     "watch:bundle": "tsc-watch",
     "start": "electron .",
-    "build:windows:nsis": "electron-builder -w nsis",
+    "build": "electron-builder -mwl",
+    "release": "dotenv -e .env electron-builder --publish always",
     "build:linux:appimage": "electron-builder -l AppImage",
-    "test:linux:appimage": "dist/revolt-desktop-1.0.0.AppImage",
-    "build:windows": "electron-builder -w appx"
+    "build:windows:appx": "electron-builder -w appx",
+    "test:linux:appimage": "dist/revolt-desktop-1.0.0.AppImage"
   },
-  "repository": "https://gitlab.insrt.uk/revolt/desktop",
+  "repository": "revoltchat/desktop",
   "devDependencies": {
     "@types/auto-launch": "^5.0.2",
+    "dotenv-cli": "^4.0.0",
     "electron": "^13.1.6",
     "electron-builder": "^22.11.7",
     "tsc-watch": "^4.4.0",
@@ -29,16 +32,31 @@
   "build": {
     "appId": "chat.revolt.app",
     "mac": {
+      "target": [
+        "zip"
+      ],
       "category": "public.app-category.social-networking"
     },
     "linux": {
+      "target": [
+        "AppImage"
+      ],
       "category": "Network"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
     },
     "appx": {
       "applicationId": "Revolt Chat",
       "identityName": "40345RevoltCommunications.revolt.chat",
       "publisher": "CN=B040CC7E-0016-4AF5-957F-F8977A6CFA3B",
       "publisherDisplayName": "Revolt Communications"
+    },
+    "publish": {
+      "provider": "github"
     }
   },
   "dependencies": {
