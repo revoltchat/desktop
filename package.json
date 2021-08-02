@@ -70,6 +70,7 @@
   "dependencies": {
     "auto-launch": "^5.0.5",
     "electron-store": "^8.0.0",
+    "electron-window-state": "^5.0.3",
     "electron-winstore-auto-launch": "^2.0.6"
   }
 }

@@ -1,6 +1,7 @@
 import type { ConfigData } from './app';
 
 import { app, BrowserWindow, shell, ipcMain, nativeImage } from 'electron';
+import windowStateKeeper from 'electron-window-state';
 import { RelaunchOptions } from 'electron/main';
 import AutoLaunch from 'auto-launch';
 import Store from 'electron-store';
@@ -47,6 +48,11 @@ function getURL() {
 var relaunch: boolean | undefined;
 function createWindow() {
 	const initialConfig = store.get('config', {});
+	const mainWindowState = windowStateKeeper({
+		defaultWidth: 1280,
+		defaultHeight: 720
+	});
+
 	const mainWindow = new BrowserWindow({
 		autoHideMenuBar: true,
 		title: 'Revolt',
@@ -59,8 +65,17 @@ function createWindow() {
 			contextIsolation: true,
 			nodeIntegration: false,
 		},
+
+		x: mainWindowState.x,
+		y: mainWindowState.y,
+		width: mainWindowState.width,
+		height: mainWindowState.height,
+
+		minWidth: 480,
+		minHeight: 300
 	})
 	
+	mainWindowState.manage(mainWindow)
 	mainWindow.loadURL(getURL())
 
 	mainWindow.webContents.on('did-finish-load', () =>
