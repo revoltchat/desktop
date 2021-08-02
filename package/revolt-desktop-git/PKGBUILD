@@ -2,27 +2,16 @@
 pkgname=revolt-desktop-git
 pkgver=1.0.0
 pkgrel=1
-epoch=0
 pkgdesc="User-first, privacy focused chat platform."
 arch=("x86_64")
 url="https://revolt.chat"
 license=("AGPL3")
-groups=()
-depends=()
-makedepends=("electron")
-checkdepends=()
-optdepends=()
+depends=("electron")
+makedepends=("git" "npm")
 provides=("${pkgname%-git}")
 conflicts=("${pkgname%-git}" "${pkgname%-git}-bin")
-replaces=()
-backup=()
-options=()
-install=
-changelog=
 source=("git+https://github.com/revoltchat/desktop.git")
-noextract=()
 md5sums=('SKIP')
-validpgpkeys=()
 
 build() {
 	cd "$srcdir/desktop"
