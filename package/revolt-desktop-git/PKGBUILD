@@ -1,0 +1,50 @@
+# Maintainer: Paul Makles <paulmakles@gmail.com>
+pkgname=revolt-desktop-git
+pkgver=1.0.0
+pkgrel=1
+epoch=0
+pkgdesc="lorem ipsum"
+arch=("x86_64")
+url="https://revolt.chat"
+license=("AGPL3")
+groups=()
+depends=()
+makedepends=("yarn" "electron")
+checkdepends=()
+optdepends=()
+provides=("${pkgname%-git}")
+conflicts=("${pkgname%-git}" "${pkgname%-git}-bin")
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=("git+https://github.com/revoltchat/desktop.git")
+noextract=()
+md5sums=('SKIP')
+validpgpkeys=()
+
+build() {
+	cd "$srcdir/${pkgname%-git}"
+    
+    electronDist=$(dirname $(realpath $(which electron)))
+    electronVer=$(electron --version | tail -c +2)
+    sed -i '/		"electron": /d' ./package.json
+    HOME="$srcdir/.electron-gyp" npm install --cache "${srcdir}/npm-cache"
+    ./node_modules/.bin/electron-builder --linux --x64 --dir dist -c.electronDist=$electronDist -c.electronVersion=$electronVer
+}
+
+package() {
+	cd "$srcdir/${pkgname%-git}"
+    
+    install -dm755 "${pkgdir}/usr/lib/${pkgname%-git}"
+    cp -dr --no-preserve=ownership dist/linux-unpacked/resources/* "${pkgdir}/usr/lib/${pkgname%-git}/"
+    
+    install -Dm644 build/icons/icon.png "$pkgdir/usr/share/pixmaps/${pkgname%-git}.png"
+    
+    install -dm755 "${pkgdir}/usr/bin"
+    install -Dm755 "$srcdir/${pkgname%-git}.sh" "$pkgdir/usr/bin/${pkgname%-git}"
+    
+    install -Dm644 "$srcdir/${pkgname%-git}.desktop" -t "$pkgdir/usr/share/applications"
+}
+

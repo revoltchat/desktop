@@ -1,11 +1,14 @@
 import type { ConfigData } from './app';
 
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, nativeImage } from 'electron';
+import { RelaunchOptions } from 'electron/main';
 import AutoLaunch from 'auto-launch';
 import Store from 'electron-store';
 import { URL } from 'url';
 import path from 'path';
-import { RelaunchOptions } from 'electron/main';
+
+const WindowIcon = nativeImage.createFromPath(path.join(__dirname, "icon.png"));
+WindowIcon.setTemplateImage(true);
 
 const store = new Store<{ config: Partial<ConfigData> }>();
 const autoLaunch = new AutoLaunch({
@@ -47,7 +50,7 @@ function createWindow() {
 	const mainWindow = new BrowserWindow({
 		autoHideMenuBar: true,
 		title: 'Revolt',
-		icon: 'build/icon.png',
+		icon: WindowIcon,
 
 		frame: initialConfig.frame,
 

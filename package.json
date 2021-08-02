@@ -16,9 +16,12 @@
     "start": "electron .",
     "build": "electron-builder -mwl",
     "release": "dotenv -e .env electron-builder --publish always",
+    "build:linux:unpacked": "electron-builder -l dir",
+    "build:linux:pacman": "electron-builder -l pacman",
     "build:linux:appimage": "electron-builder -l AppImage",
     "build:windows:appx": "electron-builder -w appx",
-    "test:linux:appimage": "dist/revolt-desktop-1.0.0.AppImage"
+    "test:linux:appimage": "dist/revolt-desktop-1.0.0.AppImage",
+    "clean": "rimraf dist"
   },
   "repository": "revoltchat/desktop",
   "devDependencies": {
@@ -26,11 +29,13 @@
     "dotenv-cli": "^4.0.0",
     "electron": "^13.1.6",
     "electron-builder": "^22.11.7",
+    "rimraf": "^3.0.2",
     "tsc-watch": "^4.4.0",
     "typescript": "^4.3.5"
   },
   "build": {
     "appId": "chat.revolt.app",
+    "artifactName": "revolt-desktop-${version}",
     "productName": "Revolt",
     "mac": {
       "target": [
@@ -40,7 +45,8 @@
     },
     "linux": {
       "target": [
-        "AppImage"
+        "AppImage",
+        "tar.gz"
       ],
       "category": "Network"
     },
