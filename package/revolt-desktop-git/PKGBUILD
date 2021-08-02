@@ -3,7 +3,7 @@ pkgname=revolt-desktop-git
 pkgver=1.0.0
 pkgrel=1
 epoch=0
-pkgdesc="lorem ipsum"
+pkgdesc="User-first, privacy focused chat platform."
 arch=("x86_64")
 url="https://revolt.chat"
 license=("AGPL3")
@@ -45,9 +45,8 @@ package() {
     
     install -Dm644 build/icons/icon.png "$pkgdir/usr/share/pixmaps/${pkgname%-git}.png"
     
-    install -dm755 "${pkgdir}/usr/bin"
-    # install -Dm755 "$srcdir/${pkgname%-git}.sh" "$pkgdir/usr/bin/${pkgname%-git}"
+    install -dm755 "${pkgdir}/usr/bin" "revolt-desktop"
     
-    install -Dm644 "${pkgname%-git}.desktop" -t "$pkgdir/usr/share/applications"
+    install -Dm755 "${pkgname%-git}.sh" "$pkgdir/usr/bin/${pkgname%-git}"
+    install -Dm644 "revolt-desktop.desktop" -t "$pkgdir/usr/share/applications"
 }
-

@@ -6,4 +6,4 @@ Terminal=false
 Type=Application
 Icon=revolt-desktop
 Categories=Network;InstantMessaging
-StartupWMClass=Revolt
+StartupWMClass=RevoltDesktop
