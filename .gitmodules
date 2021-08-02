@@ -1,0 +1,3 @@
+[submodule "revolt-desktop-git"]
+	path = package/revolt-desktop-git
+	url = ssh://aur@aur.archlinux.org/revolt-desktop-git.git
