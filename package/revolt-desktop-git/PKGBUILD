@@ -9,7 +9,7 @@ url="https://revolt.chat"
 license=("AGPL3")
 groups=()
 depends=()
-makedepends=("yarn" "electron")
+makedepends=("electron")
 checkdepends=()
 optdepends=()
 provides=("${pkgname%-git}")
@@ -25,17 +25,20 @@ md5sums=('SKIP')
 validpgpkeys=()
 
 build() {
-	cd "$srcdir/${pkgname%-git}"
+	cd "$srcdir/desktop"
     
-    electronDist=$(dirname $(realpath $(which electron)))
+    electronDist=/usr/lib/electron
     electronVer=$(electron --version | tail -c +2)
+
     sed -i '/		"electron": /d' ./package.json
     HOME="$srcdir/.electron-gyp" npm install --cache "${srcdir}/npm-cache"
-    ./node_modules/.bin/electron-builder --linux --x64 --dir dist -c.electronDist=$electronDist -c.electronVersion=$electronVer
+	npm run build:bundle
+
+    ./node_modules/.bin/electron-builder -l dir -c.electronDist=$electronDist -c.electronVersion=$electronVer
 }
 
 package() {
-	cd "$srcdir/${pkgname%-git}"
+	cd "$srcdir/desktop"
     
     install -dm755 "${pkgdir}/usr/lib/${pkgname%-git}"
     cp -dr --no-preserve=ownership dist/linux-unpacked/resources/* "${pkgdir}/usr/lib/${pkgname%-git}/"
@@ -43,8 +46,8 @@ package() {
     install -Dm644 build/icons/icon.png "$pkgdir/usr/share/pixmaps/${pkgname%-git}.png"
     
     install -dm755 "${pkgdir}/usr/bin"
-    install -Dm755 "$srcdir/${pkgname%-git}.sh" "$pkgdir/usr/bin/${pkgname%-git}"
+    # install -Dm755 "$srcdir/${pkgname%-git}.sh" "$pkgdir/usr/bin/${pkgname%-git}"
     
-    install -Dm644 "$srcdir/${pkgname%-git}.desktop" -t "$pkgdir/usr/share/applications"
+    install -Dm644 "${pkgname%-git}.desktop" -t "$pkgdir/usr/share/applications"
 }
 
