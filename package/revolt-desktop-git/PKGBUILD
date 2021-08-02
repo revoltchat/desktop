@@ -36,6 +36,6 @@ package() {
     
     install -dm755 "${pkgdir}/usr/bin" "revolt-desktop"
     
-    install -Dm755 "${pkgname%-git}.sh" "$pkgdir/usr/bin/${pkgname%-git}"
+    install -Dm755 "revolt-desktop.sh" "$pkgdir/usr/bin/${pkgname%-git}"
     install -Dm644 "revolt-desktop.desktop" -t "$pkgdir/usr/share/applications"
 }
