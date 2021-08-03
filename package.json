@@ -15,11 +15,13 @@
     "watch:bundle": "tsc-watch",
     "start": "electron .",
     "eb": "electron-builder",
-    "build": "electron-builder -mwl",
     "release": "dotenv -e .env electron-builder --publish always",
     "build:linux:appimage": "electron-builder -l AppImage",
+    "build:linux:tar": "electron-builder -l tar.gz",
+    "build:windows:nsis": "electron-builder -w nsis",
+    "build:windows:portable": "electron-builder -w portable",
     "build:windows:appx": "electron-builder -w appx",
-    "test:linux:appimage": "dist/revolt-desktop-1.0.0.AppImage",
+    "test:linux:appimage": "dist/revolt-desktop-1.0.1.AppImage",
     "clean": "rimraf dist"
   },
   "repository": "revoltchat/desktop",
@@ -35,7 +37,7 @@
   },
   "build": {
     "appId": "chat.revolt.app",
-    "artifactName": "revolt-desktop",
+    "artifactName": "revolt-desktop-${version}",
     "productName": "Revolt",
     "mac": {
       "target": [
@@ -46,9 +48,7 @@
     "linux": {
       "target": [
         "AppImage",
-        "pacman",
-        "tar.gz",
-        "deb"
+        "tar.gz"
       ],
       "category": "Network"
     },
