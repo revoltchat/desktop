@@ -14,10 +14,9 @@
     "build:bundle": "tsc",
     "watch:bundle": "tsc-watch",
     "start": "electron .",
+    "eb": "electron-builder",
     "build": "electron-builder -mwl",
     "release": "dotenv -e .env electron-builder --publish always",
-    "build:linux:unpacked": "electron-builder -l dir",
-    "build:linux:pacman": "electron-builder -l pacman",
     "build:linux:appimage": "electron-builder -l AppImage",
     "build:windows:appx": "electron-builder -w appx",
     "test:linux:appimage": "dist/revolt-desktop-1.0.0.AppImage",
@@ -36,7 +35,7 @@
   },
   "build": {
     "appId": "chat.revolt.app",
-    "artifactName": "revolt-desktop-${version}",
+    "artifactName": "revolt-desktop",
     "productName": "Revolt",
     "mac": {
       "target": [
