@@ -1,53 +1,23 @@
-import type { ConfigData } from './app';
+import type{ ConfigData } from './app';
 
 import { app, BrowserWindow, shell, ipcMain, nativeImage } from 'electron';
 import windowStateKeeper from 'electron-window-state';
 import { RelaunchOptions } from 'electron/main';
-import AutoLaunch from 'auto-launch';
-import Store from 'electron-store';
 import { URL } from 'url';
 import path from 'path';
+
+import { firstRun, getConfig, store, onStart, getBuildURL } from './lib/config';
+import { connectRPC, dropRPC } from './lib/discordRPC';
+import { autoLaunch } from './lib/autoLaunch';
 
 const WindowIcon = nativeImage.createFromPath(path.join(__dirname, "icon.png"));
 WindowIcon.setTemplateImage(true);
 
-const store = new Store<{ config: Partial<ConfigData> }>();
-const autoLaunch = new AutoLaunch({
-    name: 'Revolt',
-});
-
-async function firstRun() {
-	if (store.get('firstrun', false)) return;
-
-	// Enable auto start by default on Windows / Mac OS.
-	if (process.platform === 'win32' || process.platform === 'darwin') {
-		const enabled = await autoLaunch.isEnabled();
-		if (!enabled) {
-			await autoLaunch.enable();
-		}
-	}
-
-	// Use custom window frame on Windows.
-	if (process.platform === 'win32') {
-		store.set('config.frame', false);
-	}
-
-	store.set('firstrun', true);
-}
-
-function getURL() {
-	const build: 'stable' | 'nightly' | 'dev' | undefined = store.get('config.build');
-
-	switch (build) {
-		case 'dev': return 'http://local.revolt.chat:3001';
-		case 'nightly': return 'https://nightly.revolt.chat';
-		default: return 'https://app.revolt.chat';
-	}
-}
+onStart();
 
 var relaunch: boolean | undefined;
 function createWindow() {
-	const initialConfig = store.get('config', {});
+	const initialConfig = getConfig();
 	const mainWindowState = windowStateKeeper({
 		defaultWidth: 1280,
 		defaultHeight: 720
@@ -76,10 +46,10 @@ function createWindow() {
 	})
 	
 	mainWindowState.manage(mainWindow)
-	mainWindow.loadURL(getURL())
+	mainWindow.loadURL(getBuildURL())
 
 	mainWindow.webContents.on('did-finish-load', () =>
-		mainWindow.webContents.send('config', store.get('config'))
+		mainWindow.webContents.send('config', getConfig())
 	)
 
 	ipcMain.on('getAutoStart', () =>
@@ -97,14 +67,22 @@ function createWindow() {
 		}
 	})
 
-	ipcMain.on('set', (_, arg: Partial<ConfigData>) =>
+	ipcMain.on('set', (_, arg: Partial<ConfigData>) => {
+		if (typeof arg.discordRPC !== 'undefined') {
+			if (arg.discordRPC) {
+				connectRPC();
+			} else {
+				dropRPC();
+			}
+		}
+
 		store.set('config', {
 			...store.get('config'),
 			...arg
 		})
-	)
+	})
 
-	ipcMain.on('reload', () => mainWindow.loadURL(getURL()))
+	ipcMain.on('reload', () => mainWindow.loadURL(getBuildURL()))
 	ipcMain.on('relaunch', () => {
 		relaunch = true;
 		mainWindow.close();
@@ -149,7 +127,7 @@ app.on('web-contents-created', (_, contents) => {
 	contents.on('will-navigate', (event, navigationUrl) => {
 		const parsedUrl = new URL(navigationUrl)
 		
-		if (parsedUrl.origin !== getURL()) {
+		if (parsedUrl.origin !== getBuildURL()) {
 			event.preventDefault()
 		}
 	})

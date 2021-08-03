@@ -8,21 +8,19 @@ export type Build = 'stable' | 'nightly' | 'dev';
 export type ConfigData = Pick<Config, NonFunctionPropertyNames<Config>>;
 
 class Config {
-    frame: boolean = false;
+    frame: boolean = true;
     build: Build = 'stable';
+    discordRPC: boolean = true;
+    hardwareAcceleration: boolean = true;
 
     apply(data: Partial<ConfigData>) {
         Object.assign(this, data);
     }
 
-    setFrame(frame: boolean) {
-        this.frame = frame;
-        ipcRenderer.send('set', { frame })
-    }
-
-    setBuild(build: Build) {
-        this.build = build;
-        ipcRenderer.send('set', { build })
+    set(key: string, value: any) {
+        // @ts-expect-error
+        this[key] = value;
+        ipcRenderer.send('set', { [key]: value })
     }
 }
 
@@ -40,8 +38,7 @@ contextBridge.exposeInMainWorld(
         relaunch: () => ipcRenderer.send('relaunch'),
 
         getConfig: () => config,
-        setFrame: (v: boolean) => config.setFrame(v),
-        setBuild: (v: Build) => config.setBuild(v),
+        set: (k: string, v: any) => config.set(k, v),
 
         getAutoStart: () => new Promise(resolve => {
             ipcRenderer.send('getAutoStart')
@@ -57,5 +54,3 @@ contextBridge.exposeInMainWorld(
         })
     }
 );
-
-// https://stackoverflow.com/a/59814127

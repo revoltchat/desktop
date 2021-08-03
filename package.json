@@ -1,6 +1,6 @@
 {
   "name": "revolt-desktop",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Revolt desktop app",
   "private": true,
   "author": {
@@ -26,6 +26,7 @@
   "repository": "revoltchat/desktop",
   "devDependencies": {
     "@types/auto-launch": "^5.0.2",
+    "@types/discord-rpc": "^4.0.0",
     "dotenv-cli": "^4.0.0",
     "electron": "^13.1.6",
     "electron-builder": "^22.11.7",
@@ -46,7 +47,9 @@
     "linux": {
       "target": [
         "AppImage",
-        "tar.gz"
+        "pacman",
+        "tar.gz",
+        "deb"
       ],
       "category": "Network"
     },
@@ -69,6 +72,7 @@
   },
   "dependencies": {
     "auto-launch": "^5.0.5",
+    "discord-rpc": "^4.0.1",
     "electron-store": "^8.0.0",
     "electron-window-state": "^5.0.3",
     "electron-winstore-auto-launch": "^2.0.6"
