@@ -16,10 +16,8 @@
     "start": "electron .",
     "eb": "electron-builder",
     "release": "dotenv -e .env electron-builder --publish always",
+    "build:linux:unpacked": "electron-builder -l dir",
     "build:linux:appimage": "electron-builder -l AppImage",
-    "build:linux:tar": "electron-builder -l tar.gz",
-    "build:windows:nsis": "electron-builder -w nsis",
-    "build:windows:portable": "electron-builder -w portable",
     "build:windows:appx": "electron-builder -w appx",
     "test:linux:appimage": "dist/revolt-desktop-1.0.1.AppImage",
     "clean": "rimraf dist"
@@ -47,7 +45,9 @@
     "linux": {
       "target": [
         "AppImage",
-        "tar.gz"
+        "pacman",
+        "tar.gz",
+        "deb"
       ],
       "category": "Network"
     },
