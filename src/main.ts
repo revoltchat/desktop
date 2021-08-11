@@ -1,4 +1,4 @@
-import type{ ConfigData } from './app';
+import type { ConfigData } from './app';
 
 import { app, BrowserWindow, shell, ipcMain, nativeImage } from 'electron';
 import windowStateKeeper from 'electron-window-state';
@@ -9,11 +9,13 @@ import path from 'path';
 import { firstRun, getConfig, store, onStart, getBuildURL } from './lib/config';
 import { connectRPC, dropRPC } from './lib/discordRPC';
 import { autoLaunch } from './lib/autoLaunch';
+import { autoUpdate } from './lib/updater';
 
 const WindowIcon = nativeImage.createFromPath(path.join(__dirname, "icon.png"));
 WindowIcon.setTemplateImage(true);
 
 onStart();
+autoUpdate();
 
 var relaunch: boolean | undefined;
 function createWindow() {

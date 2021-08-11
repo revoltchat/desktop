@@ -1,6 +1,6 @@
 {
   "name": "revolt-desktop",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Revolt desktop app",
   "private": true,
   "author": {
@@ -19,7 +19,7 @@
     "build:linux:unpacked": "electron-builder -l dir",
     "build:linux:appimage": "electron-builder -l AppImage",
     "build:windows:appx": "electron-builder -w appx",
-    "test:linux:appimage": "dist/revolt-desktop-1.0.1.AppImage",
+    "test:linux:appimage": "dist/Revolt-1.0.1.AppImage",
     "clean": "rimraf dist"
   },
   "repository": "revoltchat/desktop",
@@ -72,6 +72,7 @@
     "auto-launch": "^5.0.5",
     "discord-rpc": "^4.0.1",
     "electron-store": "^8.0.0",
+    "electron-updater": "^4.3.9",
     "electron-window-state": "^5.0.3",
     "electron-winstore-auto-launch": "^2.0.6"
   }
