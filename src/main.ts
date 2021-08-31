@@ -1,6 +1,6 @@
 import type { ConfigData } from './app';
 
-import { app, BrowserWindow, shell, ipcMain, nativeImage } from 'electron';
+import { app, BrowserWindow, Tray, Menu, shell, ipcMain, nativeImage } from 'electron';
 import windowStateKeeper from 'electron-window-state';
 import { RelaunchOptions } from 'electron/main';
 import { URL } from 'url';
@@ -11,6 +11,7 @@ import { connectRPC, dropRPC } from './lib/discordRPC';
 import { autoLaunch } from './lib/autoLaunch';
 import { autoUpdate } from './lib/updater';
 
+let tray
 const WindowIcon = nativeImage.createFromPath(path.join(__dirname, "icon.png"));
 WindowIcon.setTemplateImage(true);
 
@@ -98,7 +99,8 @@ function createWindow() {
 app.whenReady().then(async () => {
 	await firstRun();
 	createWindow();
-	
+	const icon = nativeImage.createFromPath('../desktop/build/icons/icon.png')
+        tray = new Tray(icon)
 	app.on('activate', function () {
 		if (BrowserWindow.getAllWindows().length === 0) createWindow()
 	})
