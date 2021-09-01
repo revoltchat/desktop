@@ -13,8 +13,8 @@ import { autoUpdate } from './lib/updater';
 
 let tray;
 const menu = electron.Menu;
-const contextMenu = Menu.buildFromTemplate([{icon: WindowIcon, label: 'Revolt', enabled: false}, /* revolt doesn't have credits page yet {label: 'Credits' click: require("shell").openExternal("https://revolt.chat")}*/ {label:'Quit Revolt', click: app.quit();}
-					    
+const contextMenu = Menu.buildFromTemplate([{icon: WindowIcon, label: 'Revolt', enabled: false}, /* revolt doesn't have credits page yet {label: 'Credits' click: require("shell").openExternal("https://revolt.chat")}*/ {label:'Quit Revolt', click: app.quit();}]);
+
 const WindowIcon = nativeImage.createFromPath(path.join(__dirname, "icon.png"));
 WindowIcon.setTemplateImage(true);
 
