@@ -11,7 +11,10 @@ import { connectRPC, dropRPC } from './lib/discordRPC';
 import { autoLaunch } from './lib/autoLaunch';
 import { autoUpdate } from './lib/updater';
 
-let tray
+let tray;
+const menu = electron.Menu;
+const contextMenu = Menu.buildFromTemplate([{icon: WindowIcon, label: 'Revolt', enabled: false}, /* revolt doesn't have credits page yet {label: 'Credits' click: require("shell").openExternal("https://revolt.chat")}*/ {label:'Quit Revolt', click: app.quit();}
+					    
 const WindowIcon = nativeImage.createFromPath(path.join(__dirname, "icon.png"));
 WindowIcon.setTemplateImage(true);
 
@@ -99,8 +102,9 @@ function createWindow() {
 app.whenReady().then(async () => {
 	await firstRun();
 	createWindow();
-	const icon = nativeImage.createFromPath('../desktop/build/icons/icon.png')
-        tray = new Tray(icon)
+        tray = new Tray(WindowIcon)
+	tray.setToolTip("Revolt")
+	tray.setContextMenu(contextMenu)
 	app.on('activate', function () {
 		if (BrowserWindow.getAllWindows().length === 0) createWindow()
 	})
