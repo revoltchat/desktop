@@ -15,7 +15,7 @@ const WindowIcon = nativeImage.createFromPath(path.join(__dirname, "icon.png"));
 WindowIcon.setTemplateImage(true);
 
 let tray;
-const contextMenu = Menu.buildFromTemplate([{icon: WindowIcon, label: 'Revolt', enabled: false}, /* revolt doesn't have credits page yet {label: 'Credits' click: require("shell").openExternal("https://revolt.chat")}*/ { label:'Quit Revolt', click() { app.quit() } }]);
+const contextMenu = Menu.buildFromTemplate([{ icon: WindowIcon, label: `Revolt : Version: ${version}`, enabled: false }, {  label: 'Separator', type: 'separator' }, { label: 'Contribute', click() { shell.openExternal("https://github.com/revoltchat") } }, /* revolt doesn't have credits page yet { label: 'Credits', click() { shell.openExternal("https://revolt.chat") } },*/ {  label: 'Separator', type: 'separator' }, { label:'Quit Revolt', click() { app.quit() } }]);
 
 onStart();
 autoUpdate();
