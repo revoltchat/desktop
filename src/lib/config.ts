@@ -25,7 +25,7 @@ export function getConfig(): ConfigData {
     const defaults: ConfigData = {
         build: 'stable',
         frame: process.platform !== 'win32',
-        discordRPC: true,
+        discordRPC: false,
         hardwareAcceleration: true,
     };
 
