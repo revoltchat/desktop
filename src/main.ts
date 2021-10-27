@@ -1,6 +1,6 @@
 import type { ConfigData } from './app';
 
-import { app, BrowserWindow, shell, ipcMain, nativeImage } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, nativeImage, Tray, Menu, App } from 'electron';
 import windowStateKeeper from 'electron-window-state';
 import { RelaunchOptions } from 'electron/main';
 import { URL } from 'url';
@@ -11,6 +11,8 @@ import { connectRPC, dropRPC } from './lib/discordRPC';
 import { autoLaunch } from './lib/autoLaunch';
 import { autoUpdate } from './lib/updater';
 
+interface AppQuitting { isQuitting: boolean; }
+
 const WindowIcon = nativeImage.createFromPath(path.join(__dirname, "icon.png"));
 WindowIcon.setTemplateImage(true);
 
@@ -18,6 +20,7 @@ onStart();
 autoUpdate();
 
 var relaunch: boolean | undefined;
+var mainWindow: BrowserWindow;
 function createWindow() {
 	const initialConfig = getConfig();
 	const mainWindowState = windowStateKeeper({
@@ -25,7 +28,7 @@ function createWindow() {
 		defaultHeight: 720
 	});
 
-	const mainWindow = new BrowserWindow({
+	mainWindow = new BrowserWindow({
 		autoHideMenuBar: true,
 		title: 'Revolt',
 		icon: WindowIcon,
@@ -53,6 +56,17 @@ function createWindow() {
 	mainWindow.webContents.on('did-finish-load', () =>
 		mainWindow.webContents.send('config', getConfig())
 	)
+
+	mainWindow.on('show', () => tray.setContextMenu(contextMenu()))
+	mainWindow.on('hide', () => tray.setContextMenu(contextMenu()))
+	mainWindow.on('close', function (event) {
+		if(!(app as App & AppQuitting).isQuitting){
+			event.preventDefault();
+			mainWindow.hide();
+		}
+	
+		return false;
+	})
 
 	ipcMain.on('getAutoStart', () =>
 		autoLaunch.isEnabled()
@@ -95,9 +109,20 @@ function createWindow() {
 	ipcMain.on('close', () => mainWindow.close())
 }
 
+const contextMenu = () => Menu.buildFromTemplate([
+	...(mainWindow.isVisible() ? [] : [{ label: 'Show', click() { mainWindow.show(); } }]),
+	{ label:'Quit', click() { (app as App & AppQuitting).isQuitting = true; app.quit() } }
+])
+let tray : Tray;
+function createTrayIcon () {
+	tray = new Tray(WindowIcon)
+	tray.setContextMenu(contextMenu())
+}
+
 app.whenReady().then(async () => {
 	await firstRun();
 	createWindow();
+	createTrayIcon();
 	
 	app.on('activate', function () {
 		if (BrowserWindow.getAllWindows().length === 0) createWindow()
