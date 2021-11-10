@@ -58,7 +58,7 @@ jobs:
     - name: Publish Build Files
       uses: actions/upload-artifact@v2
       with:
-        path: D:\a\dektop\Revolt-windows.tar
+        path: D:\a\desktop\Revolt-windows.tar
         name: Revolt-windows
   build-macos:
 
