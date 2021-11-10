@@ -20,13 +20,11 @@ jobs:
       id: build-linux
       run: |
         yarn build:bundle
-        yarn build:linux:unpacked
         yarn build:linux:appimage --publish never
     - name: Pack Build Files
       run: |
         mkdir ~/Revolt-linux
-        # mv dist/linux-unpacked/* ~/Revolt-linux
-        mv dist/* ~/Revolt-linux
+        mv dist/*.AppImage ~/Revolt-linux
         cd ~
         tar -cvf Revolt-linux.tar Revolt-linux/
     - name: Publish Build Files
@@ -52,7 +50,7 @@ jobs:
     - name: Pack Build Files and Generate Checksums
       run: |
         mkdir D:\a\desktop\Revolt-windows
-        mv D:\a\desktop\desktop\dist\* D:\a\desktop\Revolt-windows
+        mv D:\a\desktop\desktop\dist\win-unpacked\* D:\a\desktop\Revolt-windows
         cd D:\a\desktop
         tar -cvf Revolt-windows.tar Revolt-windows\*
     - name: Publish Build Files
