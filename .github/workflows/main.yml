@@ -24,7 +24,7 @@ jobs:
     - name: Pack Build Files and Generate Checksums
       run: |
         mkdir ~/Revolt-linux
-        mv dir/* ~/Revolt-linux
+        mv dist/* ~/Revolt-linux
         cd ~
         tar -cvf Revolt-linux.tar Revolt-linux/
     - name: Publish Build Files
