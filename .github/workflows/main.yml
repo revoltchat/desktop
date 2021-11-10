@@ -63,7 +63,7 @@ jobs:
     - name: Build For macOS
       run: |
         yarn build:bundle
-        yarn build:mac --publish:never
+        yarn build:mac --publish onTag
     - name: Pack Build Files and Generate Checksums
       run: |
         mkdir ~/Revolt-macOS
