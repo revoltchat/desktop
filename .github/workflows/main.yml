@@ -52,11 +52,6 @@ jobs:
       with:
         path: D:\a\theVaultC\theVaultC-windows.tar
         name: theVaultC-windows
-    - name: Publish Checksums
-      uses: actions/upload-artifact@v2
-      with:
-        path: D:\a\theVaultC\theVaultC-windows-Checksums/*
-        name: theVaultC-windows-Checksums
   build-macos:
 
     runs-on: macos-11
