@@ -1,0 +1,95 @@
+name: make all
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  build-linux:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Yarn
+      run: yarn install
+    - name: Build For Linux
+      id: build-linux
+      run: |
+        yarn build:bundle
+        yarn build:linux:AppImage
+        yarn build:linux:unpacked
+    - name: Pack Build Files and Generate Checksums
+      run: |
+        mkdir ~/Revolt-linux
+        mv dir/* ~/Revolt-linux
+        cd ~
+        tar -cvf Revolt-linux.tar Revolt-linux/
+    - name: Publish Build Files
+      uses: actions/upload-artifact@v2
+      with:
+        path: ~/Revolt-linux.tar
+        name: Revolt-linux
+  build-windows:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Enable Developer Command Prompt
+      uses: ilammy/msvc-dev-cmd@v1.10.0
+    - name: Build For Windows
+      id: build-windows
+      run: make win
+    - name: Pack Build Files and Generate Checksums
+      run: |
+        mkdir D:\a\theVaultC\theVaultC-windows
+        mv D:\a\theVaultC\theVaultC\bin\* D:\a\theVaultC\theVaultC-windows
+        cd D:\a\theVaultC
+        tar -cvf theVaultC-windows.tar theVaultC-windows\*
+        mkdir D:\a\theVaultC\theVaultC-windows-Checksums
+        shasum -a 256 D:\a\theVaultC\theVaultC-windows.tar | sed 's/ .*//g' > D:\a\theVaultC\theVaultC-windows-Checksums\theVaultC-windows.tar.sha256
+        openssl md5 D:\a\theVaultC\theVaultC-windows.tar | sed 's/.* //' > D:\a\theVaultC\theVaultC-windows-Checksums\theVaultC-windows.tar.md5
+    - name: Publish Build Files
+      uses: actions/upload-artifact@v2
+      with:
+        path: D:\a\theVaultC\theVaultC-windows.tar
+        name: theVaultC-windows
+    - name: Publish Checksums
+      uses: actions/upload-artifact@v2
+      with:
+        path: D:\a\theVaultC\theVaultC-windows-Checksums/*
+        name: theVaultC-windows-Checksums
+  build-macos:
+
+    runs-on: macos-11
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get Dependencies
+      run: |
+        brew install ncurses
+    - name: Build For macOS
+      run: make mac
+    - name: Pack Build Files and Generate Checksums
+      run: |
+        mkdir ~/theVaultC-macOS
+        mv bin/* ~/theVaultC-macOS
+        cd ~
+        tar -cvf theVaultC-macOS.tar theVaultC-macOS/
+        mkdir ~/theVaultC-macOS-Checksums
+        shasum -a 256 ~/theVaultC-macOS.tar | sed 's/ .*//g' > ~/theVaultC-macOS-Checksums/theVaultC-macOS.tar.sha256
+        openssl md5 ~/theVaultC-macOS.tar | sed 's/.* //' > ~/theVaultC-macOS-Checksums/theVaultC-macOS.tar.md5
+    - name: Publish Build Files
+      uses: actions/upload-artifact@v2
+      with:
+        path: ~/theVaultC-macOS.tar
+        name: theVaultC-macOS
+    - name: Publish Checksums
+      uses: actions/upload-artifact@v2
+      with:
+        path: ~/theVaultC-macOS-Checksums/*
+        name: theVaultC-macOS-Checksums
