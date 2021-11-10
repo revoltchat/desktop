@@ -20,7 +20,7 @@ jobs:
       id: build-linux
       run: |
         yarn build:bundle
-        yarn build:linux:tar
+        yarn build:linux:unpacked
     - name: Pack Build Files and Generate Checksums
       run: |
         mkdir ~/Revolt-linux
