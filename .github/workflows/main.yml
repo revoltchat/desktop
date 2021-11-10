@@ -24,7 +24,7 @@ jobs:
     - name: Pack Build Files and Generate Checksums
       run: |
         mkdir ~/Revolt-linux
-        mv dist/* ~/Revolt-linux
+        mv dist/linux-unpacked/* ~/Revolt-linux
         cd ~
         tar -cvf Revolt-linux.tar Revolt-linux/
     - name: Publish Build Files
@@ -45,13 +45,8 @@ jobs:
       run: make win
     - name: Pack Build Files and Generate Checksums
       run: |
-        mkdir D:\a\theVaultC\theVaultC-windows
-        mv D:\a\theVaultC\theVaultC\bin\* D:\a\theVaultC\theVaultC-windows
-        cd D:\a\theVaultC
-        tar -cvf theVaultC-windows.tar theVaultC-windows\*
-        mkdir D:\a\theVaultC\theVaultC-windows-Checksums
-        shasum -a 256 D:\a\theVaultC\theVaultC-windows.tar | sed 's/ .*//g' > D:\a\theVaultC\theVaultC-windows-Checksums\theVaultC-windows.tar.sha256
-        openssl md5 D:\a\theVaultC\theVaultC-windows.tar | sed 's/.* //' > D:\a\theVaultC\theVaultC-windows-Checksums\theVaultC-windows.tar.md5
+        yarn build:bundle
+        yarn build:mac
     - name: Publish Build Files
       uses: actions/upload-artifact@v2
       with:
@@ -68,27 +63,20 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Get Dependencies
-      run: |
-        brew install ncurses
+    - name: Install Yarn
+      run: yarn install
     - name: Build For macOS
-      run: make mac
+      run: |
+        yarn build:bundle
+        yarn build:mac
     - name: Pack Build Files and Generate Checksums
       run: |
-        mkdir ~/theVaultC-macOS
-        mv bin/* ~/theVaultC-macOS
+        mkdir ~/Revolt-macOS
+        mv dist/* ~/Revolt-macOS
         cd ~
-        tar -cvf theVaultC-macOS.tar theVaultC-macOS/
-        mkdir ~/theVaultC-macOS-Checksums
-        shasum -a 256 ~/theVaultC-macOS.tar | sed 's/ .*//g' > ~/theVaultC-macOS-Checksums/theVaultC-macOS.tar.sha256
-        openssl md5 ~/theVaultC-macOS.tar | sed 's/.* //' > ~/theVaultC-macOS-Checksums/theVaultC-macOS.tar.md5
+        tar -cvf Revolt-macOS.tar Revolt-macOS/
     - name: Publish Build Files
       uses: actions/upload-artifact@v2
       with:
-        path: ~/theVaultC-macOS.tar
-        name: theVaultC-macOS
-    - name: Publish Checksums
-      uses: actions/upload-artifact@v2
-      with:
-        path: ~/theVaultC-macOS-Checksums/*
-        name: theVaultC-macOS-Checksums
+        path: ~/Revolt-macOS.tar
+        name: Revolt-macOS
