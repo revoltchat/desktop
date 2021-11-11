@@ -56,7 +56,8 @@ jobs:
     - name: Pack Build Files and Generate Checksums
       run: |
         mkdir D:\a\desktop\Revolt-windows
-        mv D:\a\desktop\desktop\dist\win-unpacked\* D:\a\desktop\Revolt-windows
+        # mv D:\a\desktop\desktop\dist\win-unpacked\* D:\a\desktop\Revolt-windows
+        mv D:\a\desktop\desktop\dist\* D:\a\desktop\Revolt-windows
         cd D:\a\desktop
         7z a -tzip Revolt-windows.zip Revolt-windows\
     - name: Publish Build Files

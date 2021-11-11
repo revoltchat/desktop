@@ -20,6 +20,7 @@
     "build:linux:unpacked": "electron-builder -l dir",
     "build:linux:appimage": "electron-builder -l AppImage",
     "build:mac": "electron-builder --mac --universal",
+    "build:windows:nsis": "electron-builder -w nsis",
     "build:windows:appx": "electron-builder -w appx",
     "test:linux:appimage": "dist/Revolt-1.0.1.AppImage",
     "clean": "rimraf dist"
