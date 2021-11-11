@@ -52,6 +52,7 @@ jobs:
       id: build-windows
       run: |
         yarn build:bundle
+        yarn build:windows:nsis --publish never
         yarn build:windows:appx --publish never
     - name: Pack Build Files and Generate Checksums
       run: |
