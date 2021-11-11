@@ -16,6 +16,7 @@
     "start": "electron .",
     "eb": "electron-builder",
     "release": "dotenv -e .env electron-builder --publish always",
+    "build:linux:tar": "electron-builder -l tar.gz",
     "build:linux:unpacked": "electron-builder -l dir",
     "build:linux:appimage": "electron-builder -l AppImage",
     "build:mac": "electron-builder --mac --universal",

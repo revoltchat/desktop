@@ -20,11 +20,13 @@ jobs:
       id: build-linux
       run: |
         yarn build:bundle
+        yarn build:linux:tar --publish never
         yarn build:linux:appimage --publish never
     - name: Pack Build Files
       run: |
         mkdir ~/Revolt-linux
-        mv dist/*.AppImage ~/Revolt-linux
+        # mv dist/*.AppImage ~/Revolt-linux
+        mv dist/* ~/Revolt-linux
         cd ~
         tar -cvf Revolt-linux.tar Revolt-linux/
     - name: Publish Build Files
@@ -52,11 +54,11 @@ jobs:
         mkdir D:\a\desktop\Revolt-windows
         mv D:\a\desktop\desktop\dist\win-unpacked\* D:\a\desktop\Revolt-windows
         cd D:\a\desktop
-        tar -cvf Revolt-windows.tar Revolt-windows\*
+        7z a -tzip Revolt-windows.zip Revolt-windows\
     - name: Publish Build Files
       uses: actions/upload-artifact@v2
       with:
-        path: D:\a\desktop\Revolt-windows.tar
+        path: D:\a\desktop\Revolt-windows.zip
         name: Revolt-windows
   build-macos:
 
