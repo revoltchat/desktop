@@ -24,15 +24,19 @@ jobs:
         yarn build:linux:appimage --publish never
     - name: Pack Build Files
       run: |
+        mkdir ~/Revolt-linux-appimage
+        mv dist/*.AppImage ~/Revolt-linux-AppImage
         mkdir ~/Revolt-linux
-        # mv dist/*.AppImage ~/Revolt-linux
-        mv dist/* ~/Revolt-linux
-        cd ~
-        tar -cvf Revolt-linux.tar Revolt-linux/
-    - name: Publish Build Files
+        mv dist/*.tar.gz ~/Revolt-linux
+    - name: Publish AppImage
       uses: actions/upload-artifact@v2
       with:
-        path: ~/Revolt-linux.tar
+        path: ~/Revolt-linux-AppImage/*.AppImage
+        name: Revolt-linux-AppImage
+    - name: Publish Tarfile
+      uses: actions/upload-artifact@v2
+      with:
+        path: ~/Revolt-linux/*.tar.gz
         name: Revolt-linux
   build-windows:
 
