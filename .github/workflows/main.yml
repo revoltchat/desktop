@@ -24,7 +24,7 @@ jobs:
         yarn build:linux:appimage --publish never
     - name: Pack Build Files
       run: |
-        mkdir ~/Revolt-linux-appimage
+        mkdir ~/Revolt-linux-AppImage
         mv dist/*.AppImage ~/Revolt-linux-AppImage
         mkdir ~/Revolt-linux
         mv dist/*.tar.gz ~/Revolt-linux
