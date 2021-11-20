@@ -6,3 +6,5 @@ dist
 # ignore makepkg directories
 package/*/*/
 package/*/*.zst
+
+.DS_Store

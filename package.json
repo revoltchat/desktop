@@ -1,6 +1,6 @@
 {
   "name": "revolt-desktop",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Revolt desktop app",
   "private": true,
   "author": {
@@ -16,8 +16,11 @@
     "start": "electron .",
     "eb": "electron-builder",
     "release": "dotenv -e .env electron-builder --publish always",
+    "build:linux:tar": "electron-builder -l tar.gz",
     "build:linux:unpacked": "electron-builder -l dir",
     "build:linux:appimage": "electron-builder -l AppImage",
+    "build:mac": "electron-builder --mac --universal",
+    "build:windows:nsis": "electron-builder -w nsis",
     "build:windows:appx": "electron-builder -w appx",
     "test:linux:appimage": "dist/Revolt-1.0.1.AppImage",
     "clean": "rimraf dist"
