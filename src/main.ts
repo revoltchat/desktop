@@ -11,7 +11,7 @@ import { connectRPC, dropRPC } from './lib/discordRPC';
 import { autoLaunch } from './lib/autoLaunch';
 import { autoUpdate } from './lib/updater';
 
-const WindowIcon = nativeImage.createFromPath(path.join(__dirname, "icon.png"));
+const WindowIcon = nativeImage.createFromPath(path.join(__dirname, "../build/icons/icon.png"));
 WindowIcon.setTemplateImage(true);
 
 onStart();
@@ -46,13 +46,17 @@ function createWindow() {
 		minWidth: 480,
 		minHeight: 300
 	})
-	
+
 	mainWindowState.manage(mainWindow)
 	mainWindow.loadURL(getBuildURL())
 
 	mainWindow.webContents.on('did-finish-load', () =>
 		mainWindow.webContents.send('config', getConfig())
 	)
+
+	if (process.platform === 'win32') {
+		app.setAppUserModelId(mainWindow.title);
+	}
 
 	ipcMain.on('getAutoStart', () =>
 		autoLaunch.isEnabled()
@@ -98,7 +102,7 @@ function createWindow() {
 app.whenReady().then(async () => {
 	await firstRun();
 	createWindow();
-	
+
 	app.on('activate', function () {
 		if (BrowserWindow.getAllWindows().length === 0) createWindow()
 	})
@@ -113,9 +117,9 @@ app.on('window-all-closed', function () {
 
 		if (app.isPackaged && process.env.APPIMAGE) {
 			options.execPath = process.env.APPIMAGE;
-    		options.args!.unshift('--appimage-extract-and-run');
+			options.args!.unshift('--appimage-extract-and-run');
 		}
-		
+
 		app.relaunch(options);
 		app.quit();
 
@@ -128,7 +132,7 @@ app.on('window-all-closed', function () {
 app.on('web-contents-created', (_, contents) => {
 	contents.on('will-navigate', (event, navigationUrl) => {
 		const parsedUrl = new URL(navigationUrl)
-		
+
 		if (parsedUrl.origin !== getBuildURL()) {
 			event.preventDefault()
 		}
@@ -140,7 +144,7 @@ app.on('web-contents-created', (_, contents) => {
 				shell.openExternal(url)
 			})
 		}
-		
+
 		return { action: 'deny' }
 	})
 })
