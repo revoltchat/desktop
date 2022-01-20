@@ -81,18 +81,22 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install Yarn
       run: yarn install
+    - name: Install Tools
+      run: brew update && brew install create-dmg
     - name: Build For macOS
       run: |
         yarn build:bundle
         yarn build:mac --publish never
-    - name: Pack Build Files
+    - name: Create DMG
       run: |
-        mkdir ~/Revolt-macOS
-        mv dist/mac-universal/* ~/Revolt-macOS
-        cd ~
-        tar -cvf Revolt-macOS.tar Revolt-macOS/
+        mkdir dmg-files/source_folder
+        mv dist/mac-universal/* dmg-files/source_folder
+        cd dmg-files
+        chmod +x makedmg.sh
+        ./makedmg.sh
+        mv Revolt-Installer.dmg ~
     - name: Publish Build Files
       uses: actions/upload-artifact@v2
       with:
-        path: ~/Revolt-macOS.tar
+        path: ~/Revolt-Installer.dmg
         name: Revolt-macOS
