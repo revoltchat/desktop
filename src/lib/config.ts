@@ -45,6 +45,9 @@ export function onStart() {
 }
 
 export function getBuildURL() {
+	const buildURL = store.get('buildURL', undefined);
+	if (buildURL) return buildURL;
+
 	const build: 'stable' | 'nightly' | 'dev' = getConfig().build;
 
 	switch (build) {
