@@ -1,6 +1,14 @@
 import type { ConfigData } from './app';
 
-import { app, BrowserWindow, shell, ipcMain, nativeImage } from 'electron';
+import {
+	app,
+	BrowserWindow,
+	shell,
+	ipcMain,
+	Tray,
+	Menu,
+	nativeImage,
+} from 'electron';
 import windowStateKeeper from 'electron-window-state';
 import { RelaunchOptions } from 'electron/main';
 import { URL } from 'url';
@@ -11,9 +19,12 @@ import { connectRPC, dropRPC } from './lib/discordRPC';
 import { autoLaunch } from './lib/autoLaunch';
 import { autoUpdate } from './lib/updater';
 
-const WindowIcon = nativeImage.createFromPath(path.join(__dirname, "../build/icons/icon.png"));
+const WindowIcon = nativeImage.createFromPath(
+	path.join(__dirname, '../build/icons/icon.png')
+);
 WindowIcon.setTemplateImage(true);
-
+let tray = null;
+let isQuitting = false;
 onStart();
 autoUpdate();
 
@@ -22,7 +33,7 @@ function createWindow() {
 	const initialConfig = getConfig();
 	const mainWindowState = windowStateKeeper({
 		defaultWidth: 1280,
-		defaultHeight: 720
+		defaultHeight: 720,
 	});
 
 	const mainWindow = new BrowserWindow({
@@ -44,24 +55,25 @@ function createWindow() {
 		height: mainWindowState.height,
 
 		minWidth: 480,
-		minHeight: 300
-	})
+		minHeight: 300,
+	});
 
-	mainWindowState.manage(mainWindow)
-	mainWindow.loadURL(getBuildURL())
+	mainWindowState.manage(mainWindow);
+	mainWindow.loadURL(getBuildURL());
 
 	mainWindow.webContents.on('did-finish-load', () =>
 		mainWindow.webContents.send('config', getConfig())
-	)
+	);
 
 	if (process.platform === 'win32') {
 		app.setAppUserModelId(mainWindow.title);
 	}
 
 	ipcMain.on('getAutoStart', () =>
-		autoLaunch.isEnabled()
-			.then(v => mainWindow.webContents.send('autoStart', v))
-	)
+		autoLaunch
+			.isEnabled()
+			.then((v) => mainWindow.webContents.send('autoStart', v))
+	);
 
 	ipcMain.on('setAutoStart', async (_, value: boolean) => {
 		if (value) {
@@ -71,7 +83,7 @@ function createWindow() {
 			await autoLaunch.disable();
 			mainWindow.webContents.send('autoStart', false);
 		}
-	})
+	});
 
 	ipcMain.on('set', (_, arg: Partial<ConfigData>) => {
 		if (typeof arg.discordRPC !== 'undefined') {
@@ -84,19 +96,46 @@ function createWindow() {
 
 		store.set('config', {
 			...store.get('config'),
-			...arg
-		})
-	})
-
-	ipcMain.on('reload', () => mainWindow.loadURL(getBuildURL()))
+			...arg,
+		});
+	});
+	ipcMain.on('reload', () => mainWindow.loadURL(getBuildURL()));
 	ipcMain.on('relaunch', () => {
 		relaunch = true;
 		mainWindow.close();
-	})
+	});
 
-	ipcMain.on('min', () => mainWindow.minimize())
-	ipcMain.on('max', () => mainWindow.isMaximized() ? mainWindow.unmaximize() : mainWindow.maximize())
-	ipcMain.on('close', () => mainWindow.close())
+	ipcMain.on('min', () => mainWindow.minimize());
+	ipcMain.on('max', () =>
+		mainWindow.isMaximized()
+			? mainWindow.unmaximize()
+			: mainWindow.maximize()
+	);
+	ipcMain.on('close', function (event) {
+		if (!isQuitting) {
+			event.preventDefault();
+			mainWindow.hide();
+		}
+		return false;
+	});
+	mainWindow.on('close', function (event) {
+		if (!isQuitting) {
+			event.preventDefault();
+			mainWindow.hide();
+		}
+		return false;
+	});
+
+	tray = new Tray(WindowIcon);
+	const contextMenu = Menu.buildFromTemplate([
+		{ label: 'Revolt', type: 'normal', enabled: false },
+		{ label: '---', type: 'separator' },
+		{label: 'Show/Hide Revolt',type: 'normal',click: function () {if (mainWindow.isVisible()) {mainWindow.hide();} else {mainWindow.show();}},},
+		{label: 'Quit Revolt',type: 'normal',click: function () {isQuitting = true;app.quit();},},
+	]);
+	tray.setTitle('Revolt');
+	tray.setContextMenu(contextMenu);
+	tray.on('click', function (e) {if (mainWindow.isVisible()) {mainWindow.hide();} else {mainWindow.show();}});
 }
 
 app.whenReady().then(async () => {
@@ -104,15 +143,15 @@ app.whenReady().then(async () => {
 	createWindow();
 
 	app.on('activate', function () {
-		if (BrowserWindow.getAllWindows().length === 0) createWindow()
-	})
-})
+		if (BrowserWindow.getAllWindows().length === 0) createWindow();
+	});
+});
 
 app.on('window-all-closed', function () {
 	if (relaunch) {
 		const options: RelaunchOptions = {
 			args: process.argv.slice(1).concat(['--relaunch']),
-			execPath: process.execPath
+			execPath: process.execPath,
 		};
 
 		if (app.isPackaged && process.env.APPIMAGE) {
@@ -126,25 +165,29 @@ app.on('window-all-closed', function () {
 		return;
 	}
 
-	if (process.platform !== 'darwin') app.quit()
-})
+	if (process.platform !== 'darwin') app.quit();
+});
 
 app.on('web-contents-created', (_, contents) => {
 	contents.on('will-navigate', (event, navigationUrl) => {
-		const parsedUrl = new URL(navigationUrl)
+		const parsedUrl = new URL(navigationUrl);
 
 		if (parsedUrl.origin !== getBuildURL()) {
-			event.preventDefault()
+			event.preventDefault();
 		}
-	})
+	});
 
 	contents.setWindowOpenHandler(({ url }) => {
-		if (url.startsWith('http:') || url.startsWith('https:') || url.startsWith('mailto:')) {
+		if (
+			url.startsWith('http:') ||
+			url.startsWith('https:') ||
+			url.startsWith('mailto:')
+		) {
 			setImmediate(() => {
-				shell.openExternal(url)
-			})
+				shell.openExternal(url);
+			});
 		}
 
-		return { action: 'deny' }
-	})
-})
+		return { action: 'deny' };
+	});
+});
