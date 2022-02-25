@@ -6,3 +6,8 @@ dist
 # ignore makepkg directories
 package/*/*/
 package/*/*.zst
+
+# Yarn cache files
+.yarn/install-state.gz
+.yarn/build-state.yml
+.yarn/cache
