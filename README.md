@@ -9,11 +9,6 @@ This is a desktop application for Revolt built on Electron.
 -   [Electron](https://electronjs.org/)
 -   [Electron Builder](https://www.electron.build/)
 
-## Submodule Hint
-
-This project contains submodules. Run `git submodule init` after you clone this repository to initialize the submodules.
-It is also recommended to run `git submodule update` after you pull from upstream.
-
 ## Resources
 
 ### Revolt Desktop
@@ -31,7 +26,7 @@ It is also recommended to run `git submodule update` after you pull from upstrea
 Get Revolt Desktop up and running locally.
 
 ```
-git clone --recursive https://github.com/revoltchat/desktop
+git clone https://github.com/revoltchat/desktop
 cd desktop
 yarn
 yarn build:bundle
