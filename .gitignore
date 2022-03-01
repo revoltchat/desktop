@@ -11,3 +11,5 @@ package/*/*.zst
 .yarn/install-state.gz
 .yarn/build-state.yml
 .yarn/cache
+
+.DS_Store
