@@ -16,7 +16,7 @@ export async function connectRPC() {
                 largeImageKey: 'qr',
                 largeImageText: 'Communication is critical – use Revolt.',
                 buttons: [
-                    { label: 'Join Public Beta', url: 'https://campaign.revolt.chat/api/discord-rpc' },
+                    { label: 'Join Public Beta', url: 'https://revolt.chat/publicbeta' },
                     { label: 'Website', url: 'https://revolt.chat' }
                 ]
             })
