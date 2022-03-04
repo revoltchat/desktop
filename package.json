@@ -79,5 +79,5 @@
     "electron-window-state": "^5.0.3",
     "electron-winstore-auto-launch": "^2.0.6"
   },
-  "packageManager": "yarn@3.1.1"
+  "packageManager": "yarn@3.2.0"
 }
