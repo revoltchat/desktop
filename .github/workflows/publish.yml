@@ -2,7 +2,8 @@ name: Publish Packages
 
 on:
   push:
-    branches: [ master ]
+    tags:
+      - v*
 
   workflow_dispatch:
 
@@ -20,7 +21,7 @@ jobs:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         yarn build:bundle
-        yarn ci
+        yarn release
 
   publish-windows:
 
@@ -38,7 +39,7 @@ jobs:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         yarn build:bundle
-        yarn ci
+        yarn release
 
   publish-macos:
 
@@ -53,4 +54,4 @@ jobs:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         yarn build:bundle
-        yarn ci
+        yarn release
