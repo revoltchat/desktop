@@ -29,12 +29,12 @@
   "devDependencies": {
     "@types/auto-launch": "^5.0.2",
     "@types/discord-rpc": "^4.0.0",
-    "dotenv-cli": "^4.0.0",
-    "electron": "^13.1.6",
-    "electron-builder": "^22.11.7",
+    "dotenv-cli": "^5.0.0",
+    "electron": "^17.1.0",
+    "electron-builder": "^22.14.13",
     "rimraf": "^3.0.2",
-    "tsc-watch": "^4.4.0",
-    "typescript": "^4.3.5"
+    "tsc-watch": "^4.6.0",
+    "typescript": "^4.5.5"
   },
   "build": {
     "appId": "chat.revolt.app",
@@ -74,9 +74,10 @@
   "dependencies": {
     "auto-launch": "^5.0.5",
     "discord-rpc": "^4.0.1",
-    "electron-store": "^8.0.0",
-    "electron-updater": "^4.3.9",
+    "electron-store": "^8.0.1",
+    "electron-updater": "^4.6.5",
     "electron-window-state": "^5.0.3",
     "electron-winstore-auto-launch": "^2.0.6"
-  }
+  },
+  "packageManager": "yarn@3.1.1"
 }
