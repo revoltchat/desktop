@@ -43,7 +43,7 @@ function createWindow() {
 		width: mainWindowState.width,
 		height: mainWindowState.height,
 
-		minWidth: 480,
+		minWidth: 300,
 		minHeight: 300
 	})
 

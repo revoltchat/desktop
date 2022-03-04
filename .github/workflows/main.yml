@@ -1,4 +1,4 @@
-name: build revolt
+name: Build Packages
 
 on:
   push:
@@ -22,7 +22,6 @@ jobs:
         yarn build:bundle
         yarn build:linux:tar --publish never
         yarn build:linux:appimage --publish never
-        yarn ci
     - name: Pack Build Files
       run: |
         mkdir ~/Revolt-linux-AppImage
@@ -55,7 +54,6 @@ jobs:
         yarn build:bundle
         yarn build:windows:nsis --publish never
         yarn build:windows:appx --publish never
-        yarn ci
     - name: Pack Build Files
       run: |
         mkdir D:\a\desktop\Revolt-windows
@@ -87,7 +85,6 @@ jobs:
       run: |
         yarn build:bundle
         yarn build:mac --publish never
-        yarn ci
     - name: Pack Build Files
       run: |
         mkdir ~/Revolt-macOS

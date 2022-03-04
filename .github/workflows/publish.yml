@@ -1,0 +1,56 @@
+name: Publish Packages
+
+on:
+  push:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+jobs:
+  publish-linux:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Yarn
+      run: yarn install
+    - name: Build For Linux
+      id: build-linux
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      run: |
+        yarn build:bundle
+        yarn ci
+
+  publish-windows:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Enable Developer Command Prompt
+      uses: ilammy/msvc-dev-cmd@v1.10.0
+    - name: Install Yarn
+      run: yarn install
+    - name: Build For Windows
+      id: build-windows
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      run: |
+        yarn build:bundle
+        yarn ci
+
+  publish-macos:
+
+    runs-on: macos-11
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Yarn
+      run: yarn install
+    - name: Build For macOS
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      run: |
+        yarn build:bundle
+        yarn ci
