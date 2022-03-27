@@ -151,10 +151,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/discord-rpc@npm:^4.0.0":
-  version: 4.0.0
-  resolution: "@types/discord-rpc@npm:4.0.0"
-  checksum: 5ca384b9bda1c8c6a7cc7d92805dcd723a0d3aebe239962058344bef248ce49271b76bdda699732c144feb7e7ae5825a13fe3cb55c13002c343811c839661b4f
+"@types/discord-rpc@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@types/discord-rpc@npm:4.0.1"
+  checksum: 2a1bc76154c1a2610435f8250779e17acbd3b86100497e9725faca36253eee9c2e629b54366a3e25231919e165449d04541e6f647ecdec07d984786c3c6555e9
   languageName: node
   linkType: hard
 
@@ -2974,7 +2974,7 @@ __metadata:
   resolution: "revolt-desktop@workspace:."
   dependencies:
     "@types/auto-launch": ^5.0.2
-    "@types/discord-rpc": ^4.0.0
+    "@types/discord-rpc": ^4.0.1
     auto-launch: ^5.0.5
     discord-rpc: ^4.0.1
     dotenv-cli: ^5.0.0

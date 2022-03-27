@@ -22,7 +22,7 @@ export async function connectRPC() {
             })
         )
 
-        // @ts-expect-error
+        // @ts-ignore
         rpc.on('disconnected', reconnect)
 
         rpc.login({ clientId: '872068124005007420' });
