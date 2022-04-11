@@ -4,13 +4,13 @@ type NonFunctionPropertyNames<T> = {
     [K in keyof T]: T[K] extends Function ? never : K;
   }[keyof T];
 
-export type Build = 'stable' | 'nightly' | 'dev';
+export type Build = 'stable' | 'nightly' | 'dev' | 'gryt';
 export type ConfigData = Pick<Config, NonFunctionPropertyNames<Config>>;
 
 class Config {
     frame: boolean = true;
-    build: Build = 'stable';
-    discordRPC: boolean = true;
+    build: Build = 'gryt';
+    discordRPC: boolean = false;
     hardwareAcceleration: boolean = true;
 
     apply(data: Partial<ConfigData>) {

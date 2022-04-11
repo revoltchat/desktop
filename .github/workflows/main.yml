@@ -24,20 +24,20 @@ jobs:
         yarn build:linux:appimage --publish never
     - name: Pack Build Files
       run: |
-        mkdir ~/Revolt-linux-AppImage
-        mv dist/*.AppImage ~/Revolt-linux-AppImage
-        mkdir ~/Revolt-linux
-        mv dist/*.tar.gz ~/Revolt-linux
+        mkdir ~/Gryt-linux-AppImage
+        mv dist/*.AppImage ~/Gryt-linux-AppImage
+        mkdir ~/Gryt-linux
+        mv dist/*.tar.gz ~/Gryt-linux
     - name: Publish AppImage
       uses: actions/upload-artifact@v2
       with:
-        path: ~/Revolt-linux-AppImage/*.AppImage
-        name: Revolt-linux-AppImage
+        path: ~/Gryt-linux-AppImage/*.AppImage
+        name: Gryt-linux-AppImage
     - name: Publish Tarfile
       uses: actions/upload-artifact@v2
       with:
-        path: ~/Revolt-linux/*.tar.gz
-        name: Revolt-linux
+        path: ~/Gryt-linux/*.tar.gz
+        name: Gryt-linux
   build-windows:
 
     runs-on: windows-latest
@@ -56,23 +56,23 @@ jobs:
         yarn build:windows:appx --publish never
     - name: Pack Build Files
       run: |
-        mkdir D:\a\desktop\Revolt-windows
-        mv D:\a\desktop\desktop\dist\win-unpacked\* D:\a\desktop\Revolt-windows
-        mkdir D:\a\desktop\Revolt-windows-Setup
-        mv D:\a\desktop\desktop\dist\*.exe D:\a\desktop\Revolt-windows-Setup
+        mkdir D:\a\desktop\Gryt-windows
+        mv D:\a\desktop\desktop\dist\win-unpacked\* D:\a\desktop\Gryt-windows
+        mkdir D:\a\desktop\Gryt-windows-Setup
+        mv D:\a\desktop\desktop\dist\*.exe D:\a\desktop\Gryt-windows-Setup
         cd D:\a\desktop
-        7z a -tzip Revolt-windows.zip Revolt-windows\
-        7z a -tzip Revolt-windows-Setup.zip Revolt-windows-Setup\
+        7z a -tzip Gryt-windows.zip Gryt-windows\
+        7z a -tzip Gryt-windows-Setup.zip Gryt-windows-Setup\
     - name: Publish Zipfile
       uses: actions/upload-artifact@v2
       with:
-        path: D:\a\desktop\Revolt-windows.zip
-        name: Revolt-windows
+        path: D:\a\desktop\Gryt-windows.zip
+        name: Gryt-windows
     - name: Publish Installer
       uses: actions/upload-artifact@v2
       with:
-        path: D:\a\desktop\Revolt-windows-Setup.zip
-        name: Revolt-windows-Setup
+        path: D:\a\desktop\Gryt-windows-Setup.zip
+        name: Gryt-windows-Setup
   build-macos:
 
     runs-on: macos-11
@@ -87,12 +87,12 @@ jobs:
         yarn build:mac --publish never
     - name: Pack Build Files
       run: |
-        mkdir ~/Revolt-macOS
-        mv dist/mac-universal/* ~/Revolt-macOS
+        mkdir ~/Gryt-macOS
+        mv dist/mac-universal/* ~/Gryt-macOS
         cd ~
-        tar -cvf Revolt-macOS.tar Revolt-macOS/
+        tar -cvf Gryt-macOS.tar Gryt-macOS/
     - name: Publish Build Files
       uses: actions/upload-artifact@v2
       with:
-        path: ~/Revolt-macOS.tar
-        name: Revolt-macOS
+        path: ~/Gryt-macOS.tar
+        name: Gryt-macOS

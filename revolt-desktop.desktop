@@ -1,9 +1,9 @@
 [Desktop Entry]
-Name=Revolt
+Name=Gryt
 Comment=User-first, privacy focused chat platform.
-Exec=revolt-desktop
+Exec=Gryt-desktop
 Terminal=false
 Type=Application
-Icon=revolt-desktop
+Icon=Gryt-desktop
 Categories=Network;InstantMessaging
-StartupWMClass=RevoltDesktop
+StartupWMClass=GrytDesktop

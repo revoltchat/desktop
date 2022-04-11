@@ -23,7 +23,7 @@ export async function firstRun() {
 
 export function getConfig(): ConfigData {
     const defaults: ConfigData = {
-        build: 'stable',
+        build: 'gryt',
         frame: process.platform !== 'win32',
         discordRPC: false,
         hardwareAcceleration: true,
@@ -45,11 +45,12 @@ export function onStart() {
 }
 
 export function getBuildURL() {
-	const build: 'stable' | 'nightly' | 'dev' = getConfig().build;
+	const build: 'stable' | 'nightly' | 'dev' | 'gryt' = getConfig().build;
 
 	switch (build) {
-		case 'dev': return 'http://local.revolt.chat:3001';
-		case 'nightly': return 'https://nightly.revolt.chat';
-		default: return 'https://app.revolt.chat';
+		case 'dev': return 'http://sigurd.tech:5000';
+		case 'gryt': return 'http://sigurd.tech:5000';
+		case 'nightly': return 'http://sigurd.tech:5000';
+		default: return 'http://sigurd.tech:5000';
 	}
 }

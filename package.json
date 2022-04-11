@@ -1,12 +1,12 @@
 {
-  "name": "revolt-desktop",
+  "name": "gryt-desktop",
   "version": "1.0.3",
-  "description": "Revolt desktop app",
+  "description": "Gryt desktop app",
   "private": true,
   "author": {
-    "name": "Paul Makles",
-    "url": "https://insrt.uk",
-    "email": "me@insrt.uk"
+    "name": "Sivert Gullberg Hansen",
+    "url": "https://blog.sivert.xyz/",
+    "email": "contact@sivert.xyz"
   },
   "homepage": "https://revolt.chat",
   "main": "bundle/main.js",
@@ -39,8 +39,8 @@
     "typescript": "^4.5.5"
   },
   "build": {
-    "appId": "chat.revolt.app",
-    "productName": "Revolt",
+    "appId": "chat.gryt.app",
+    "productName": "Gryt",
     "mac": {
       "target": [
         "zip"
@@ -61,11 +61,11 @@
       ]
     },
     "appx": {
-      "displayName": "Revolt Chat",
-      "applicationId": "revolt.chat",
+      "displayName": "Gryt Chat",
+      "applicationId": "gryt.chat",
       "identityName": "40345RevoltCommunications.revolt.chat",
       "publisher": "CN=B040CC7E-0016-4AF5-957F-F8977A6CFA3B",
-      "publisherDisplayName": "Revolt Communications"
+      "publisherDisplayName": "Sivert Gullberg Hansen"
     },
     "publish": {
       "provider": "github"

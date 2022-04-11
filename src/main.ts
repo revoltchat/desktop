@@ -27,7 +27,7 @@ function createWindow() {
 
 	const mainWindow = new BrowserWindow({
 		autoHideMenuBar: true,
-		title: 'Revolt',
+		title: 'Gryt',
 		icon: WindowIcon,
 
 		frame: initialConfig.frame,
