@@ -93,6 +93,15 @@ function createWindow() {
         }
     });
 
+    mainWindow.webContents.on("before-input-event", (event, input) => {
+        if (input.control && input.key === "=") {
+            event.preventDefault();
+            mainWindow.webContents.setZoomLevel(
+                mainWindow.webContents.getZoomLevel() + 1,
+            );
+        }
+    });
+
     mainWindow.webContents.on("did-finish-load", () =>
         mainWindow.webContents.send("config", getConfig()),
     );
