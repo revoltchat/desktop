@@ -214,6 +214,14 @@ function createWindow() {
                     },
                 },
                 {
+                    label: "Restart Revolt",
+                    type: "normal",
+                    click: function () {
+                        app.shouldRelaunch = true;
+                        mainWindow.close();
+                    },
+                },
+                {
                     label: "Quit Revolt",
                     type: "normal",
                     click: function () {
@@ -284,7 +292,6 @@ App.on("window-all-closed", function () {
         }
 
         App.quit();
-
         return;
     }
 
