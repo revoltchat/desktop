@@ -63,6 +63,8 @@ function createWindow() {
         width: mainWindowState.width,
         height: mainWindowState.height,
 
+        backgroundColor: "#191919",
+
         minWidth: 300,
         minHeight: 300,
     });
