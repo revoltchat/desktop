@@ -1095,17 +1095,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"discord-rpc@npm:^4.0.1":
+"discord-rpc@npm:@insertish/discord-rpc@*":
   version: 4.0.1
-  resolution: "discord-rpc@npm:4.0.1"
+  resolution: "@insertish/discord-rpc@npm:4.0.1"
   dependencies:
     node-fetch: ^2.6.1
-    register-scheme: "github:devsnek/node-register-scheme"
+    register-scheme: 0.0.2
     ws: ^7.3.1
   dependenciesMeta:
     register-scheme:
       optional: true
-  checksum: f96e4e32751402c9a689b24eccfa319315995f8906bb86e167c6a94bc6466f3641b41f8a082ac5b4e92baa7cefdb3456e7c4d86ccd2d9373281c9a93b7335c56
+  checksum: ebe6e3c5cbee72d5f9624c251d0f22bc7e96c752a7c76182c158f2687455c0803d630b5c42e9d8ef3cd028b3c502012455adc5f41e833d9d3b977240c59c572b
   languageName: node
   linkType: hard
 
@@ -2821,13 +2821,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"register-scheme@github:devsnek/node-register-scheme":
+"register-scheme@npm:0.0.2":
   version: 0.0.2
-  resolution: "register-scheme@https://github.com/devsnek/node-register-scheme.git#commit=e7cc9a63a1f512565da44cb57316d9fb10750e17"
+  resolution: "register-scheme@npm:0.0.2"
   dependencies:
     bindings: ^1.3.0
     node-addon-api: ^1.3.0
-  checksum: a7409d3f7d2289ab44b915d9fc9bc8a07f982e156ed42e9fb823fdb7d73261f3273e7c8b85618453a8d8aa8947642bcee0a3b3799bc44cc5138a96cb780dc569
+    node-gyp: latest
+  checksum: 3753bc130d88d5de6334f9d06498bdc8879f3d75e297427fb7cae4cbc5fe0d3e9d254a7f219f2eec9e3eea5fd78b954cdc3a2ff3755dea6f897e19122fb04e75
   languageName: node
   linkType: hard
 
@@ -2886,7 +2887,7 @@ __metadata:
     "@types/auto-launch": ^5.0.2
     "@types/discord-rpc": ^4.0.1
     auto-launch: ^5.0.5
-    discord-rpc: ^4.0.1
+    discord-rpc: "npm:@insertish/discord-rpc@*"
     dotenv-cli: ^5.0.0
     electron: ^17.1.0
     electron-builder: ^22.14.13

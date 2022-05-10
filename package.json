@@ -74,7 +74,7 @@
     },
     "dependencies": {
         "auto-launch": "^5.0.5",
-        "discord-rpc": "^4.0.1",
+        "discord-rpc": "npm:@insertish/discord-rpc@*",
         "electron-store": "^8.0.1",
         "electron-updater": "^4.6.5",
         "electron-window-state": "^5.0.3"
