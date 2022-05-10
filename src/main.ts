@@ -8,6 +8,7 @@ import {
     nativeImage,
     Tray,
     Menu,
+    MenuItem,
 } from "electron";
 import { execFile } from "child_process";
 import windowStateKeeper from "electron-window-state";
@@ -107,6 +108,38 @@ function createWindow() {
     mainWindow.webContents.on("did-finish-load", () =>
         mainWindow.webContents.send("config", getConfig()),
     );
+
+    mainWindow.webContents.on("context-menu", (_, params) => {
+        const menu = new Menu();
+
+        // Add each spelling suggestion
+        for (const suggestion of params.dictionarySuggestions) {
+            menu.append(
+                new MenuItem({
+                    label: suggestion,
+                    click: () =>
+                        mainWindow.webContents.replaceMisspelling(suggestion),
+                }),
+            );
+        }
+
+        // Allow users to add the misspelled word to the dictionary
+        if (params.misspelledWord) {
+            menu.append(
+                new MenuItem({
+                    label: "Add to dictionary",
+                    click: () =>
+                        mainWindow.webContents.session.addWordToSpellCheckerDictionary(
+                            params.misspelledWord,
+                        ),
+                }),
+            );
+        }
+
+        if (menu.items.length > 0) {
+            menu.popup();
+        }
+    });
 
     /**
      * Inter-process communication
