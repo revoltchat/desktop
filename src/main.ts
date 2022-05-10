@@ -1,6 +1,14 @@
 import type { ConfigData } from "./app";
 
-import { app, BrowserWindow, shell, ipcMain, nativeImage } from "electron";
+import {
+    app as App,
+    BrowserWindow,
+    shell,
+    ipcMain,
+    nativeImage,
+    Tray,
+    Menu,
+} from "electron";
 import windowStateKeeper from "electron-window-state";
 import { RelaunchOptions } from "electron/main";
 import { URL } from "url";
@@ -19,8 +27,13 @@ WindowIcon.setTemplateImage(true);
 onStart();
 autoUpdate();
 
+type AppInterface = typeof App & {
+    shouldRelaunch: boolean;
+    shouldQuit: boolean;
+};
+
 let mainWindow: BrowserWindow;
-var relaunch: boolean | undefined;
+let app = App as AppInterface;
 
 /**
  * Create the main window.
@@ -40,7 +53,7 @@ function createWindow() {
         frame: initialConfig.frame,
 
         webPreferences: {
-            preload: path.resolve(app.getAppPath(), "bundle", "app.js"),
+            preload: path.resolve(App.getAppPath(), "bundle", "app.js"),
             contextIsolation: true,
             nodeIntegration: false,
         },
@@ -54,17 +67,37 @@ function createWindow() {
         minHeight: 300,
     });
 
+    if (process.platform === "win32") {
+        App.setAppUserModelId(mainWindow.title);
+    }
+
     mainWindowState.manage(mainWindow);
     mainWindow.loadURL(getBuildURL());
+
+    /**
+     * Window events
+     */
+    mainWindow.on("show", () => buildMenu());
+    mainWindow.on("hide", () => buildMenu());
+
+    mainWindow.on("close", (event) => {
+        if (
+            !app.shouldQuit &&
+            !app.shouldRelaunch &&
+            store.get("config").minimiseToTray
+        ) {
+            event.preventDefault();
+            mainWindow.hide();
+        }
+    });
 
     mainWindow.webContents.on("did-finish-load", () =>
         mainWindow.webContents.send("config", getConfig()),
     );
 
-    if (process.platform === "win32") {
-        app.setAppUserModelId(mainWindow.title);
-    }
-
+    /**
+     * Inter-process communication
+     */
     ipcMain.on("getAutoStart", () =>
         autoLaunch
             .isEnabled()
@@ -98,7 +131,7 @@ function createWindow() {
 
     ipcMain.on("reload", () => mainWindow.loadURL(getBuildURL()));
     ipcMain.on("relaunch", () => {
-        relaunch = true;
+        app.shouldRelaunch = true;
         mainWindow.close();
     });
 
@@ -108,29 +141,80 @@ function createWindow() {
             ? mainWindow.unmaximize()
             : mainWindow.maximize(),
     );
+
     ipcMain.on("close", () => mainWindow.close());
+
+    /**
+     * System tray
+     */
+    const tray = new Tray(WindowIcon);
+
+    function buildMenu() {
+        tray.setContextMenu(
+            Menu.buildFromTemplate([
+                { label: "Revolt", type: "normal", enabled: false },
+                { label: "---", type: "separator" },
+                {
+                    label: mainWindow.isVisible()
+                        ? "Hide Revolt"
+                        : "Show Revolt",
+                    type: "normal",
+                    click: function () {
+                        if (mainWindow.isVisible()) {
+                            mainWindow.hide();
+                        } else {
+                            mainWindow.show();
+                        }
+                    },
+                },
+                {
+                    label: "Quit Revolt",
+                    type: "normal",
+                    click: function () {
+                        app.shouldQuit = true;
+                        app.quit();
+                    },
+                },
+            ]),
+        );
+    }
+
+    buildMenu();
+    tray.setTitle("Revolt");
+    tray.setToolTip("Revolt");
+    tray.on("click", function (e) {
+        if (mainWindow.isVisible()) {
+            if (mainWindow.isFocused()) {
+                mainWindow.hide();
+            } else {
+                mainWindow.focus();
+            }
+        } else {
+            mainWindow.show();
+        }
+    });
 }
 
 /**
  * Only launch the application once.
  */
-const acquiredLock = app.requestSingleInstanceLock();
+const acquiredLock = App.requestSingleInstanceLock();
 
 if (!acquiredLock) {
-    app.quit();
+    App.quit();
 } else {
-    app.on("second-instance", () => {
+    App.on("second-instance", () => {
         if (mainWindow) {
             if (mainWindow.isMinimized()) mainWindow.restore();
             mainWindow.focus();
         }
     });
 
-    app.whenReady().then(async () => {
+    App.whenReady().then(async () => {
         await firstRun();
         createWindow();
 
-        app.on("activate", function () {
+        App.on("activate", function () {
             if (BrowserWindow.getAllWindows().length === 0) createWindow();
         });
     });
@@ -139,31 +223,31 @@ if (!acquiredLock) {
 /**
  * Close out application unless if instructed to relaunch.
  */
-app.on("window-all-closed", function () {
-    if (relaunch) {
+App.on("window-all-closed", function () {
+    if (app.shouldRelaunch) {
         const options: RelaunchOptions = {
             args: process.argv.slice(1).concat(["--relaunch"]),
             execPath: process.execPath,
         };
 
-        if (app.isPackaged && process.env.APPIMAGE) {
+        if (App.isPackaged && process.env.APPIMAGE) {
             options.execPath = process.env.APPIMAGE;
             options.args!.unshift("--appimage-extract-and-run");
         }
 
-        app.relaunch(options);
-        app.quit();
+        App.relaunch(options);
+        App.quit();
 
         return;
     }
 
-    if (process.platform !== "darwin") app.quit();
+    if (process.platform !== "darwin") App.quit();
 });
 
 /**
  * Add navigation handlers.
  */
-app.on("web-contents-created", (_, contents) => {
+App.on("web-contents-created", (_, contents) => {
     contents.on("will-navigate", (event, navigationUrl) => {
         const parsedUrl = new URL(navigationUrl);
 

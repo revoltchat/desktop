@@ -26,6 +26,7 @@ export function getConfig(): ConfigData {
         build: "stable",
         frame: process.platform !== "win32",
         discordRPC: false,
+        minimiseToTray: true,
         hardwareAcceleration: true,
     };
 

@@ -11,6 +11,7 @@ class Config {
     frame: boolean = true;
     build: Build = "stable";
     discordRPC: boolean = true;
+    minimiseToTray: boolean = true;
     hardwareAcceleration: boolean = true;
 
     apply(data: Partial<ConfigData>) {
