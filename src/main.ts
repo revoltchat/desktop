@@ -9,6 +9,7 @@ import {
     Tray,
     Menu,
 } from "electron";
+import { execFile } from "child_process";
 import windowStateKeeper from "electron-window-state";
 import { RelaunchOptions } from "electron/main";
 import { URL } from "url";
@@ -20,8 +21,9 @@ import { autoLaunch } from "./lib/autoLaunch";
 import { autoUpdate } from "./lib/updater";
 
 const WindowIcon = nativeImage.createFromPath(
-    path.join(__dirname, "../build/icons/icon.png"),
+    path.resolve(App.getAppPath(), "assets", "icon.png"),
 );
+
 WindowIcon.setTemplateImage(true);
 
 onStart();
@@ -193,6 +195,7 @@ function createWindow() {
     buildMenu();
     tray.setTitle("Revolt");
     tray.setToolTip("Revolt");
+    tray.setImage(WindowIcon);
     tray.on("click", function (e) {
         if (mainWindow.isVisible()) {
             if (mainWindow.isFocused()) {
@@ -242,11 +245,11 @@ App.on("window-all-closed", function () {
         };
 
         if (App.isPackaged && process.env.APPIMAGE) {
-            options.execPath = process.env.APPIMAGE;
-            options.args!.unshift("--appimage-extract-and-run");
+            execFile(process.env.APPIMAGE, options.args);
+        } else {
+            App.relaunch(options);
         }
 
-        App.relaunch(options);
         App.quit();
 
         return;
