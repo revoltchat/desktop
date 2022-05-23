@@ -29,7 +29,7 @@ let config = new Config();
 ipcRenderer.on("config", (_, data) => config.apply(data));
 
 contextBridge.exposeInMainWorld("isNative", true);
-contextBridge.exposeInMainWorld("nativeVersion", "1.0.4");
+contextBridge.exposeInMainWorld("nativeVersion", "1.0.5");
 contextBridge.exposeInMainWorld("native", {
     min: () => ipcRenderer.send("min"),
     max: () => ipcRenderer.send("max"),
