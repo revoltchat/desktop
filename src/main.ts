@@ -89,7 +89,7 @@ function createWindow() {
         if (
             !app.shouldQuit &&
             !app.shouldRelaunch &&
-            store.get("config").minimiseToTray
+            getConfig().minimiseToTray
         ) {
             event.preventDefault();
             mainWindow.hide();
