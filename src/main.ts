@@ -22,6 +22,10 @@ import { autoLaunch } from "./lib/autoLaunch";
 import { autoUpdate } from "./lib/updater";
 
 const WindowIcon = nativeImage.createFromPath(
+    path.join(__dirname, "../build/icons/icon.png"),
+);
+
+const trayIcon = nativeImage.createFromPath(
     path.resolve(
         App.getAppPath(),
         "assets",
@@ -31,7 +35,7 @@ const WindowIcon = nativeImage.createFromPath(
     ),
 );
 
-WindowIcon.setTemplateImage(true);
+trayIcon.setTemplateImage(true);
 
 onStart();
 autoUpdate();
@@ -199,7 +203,7 @@ function createWindow() {
     /**
      * System tray
      */
-    const tray = new Tray(WindowIcon);
+    const tray = new Tray(trayIcon);
 
     function buildMenu() {
         tray.setContextMenu(
@@ -241,7 +245,7 @@ function createWindow() {
 
     buildMenu();
     tray.setToolTip("Revolt");
-    tray.setImage(WindowIcon);
+    tray.setImage(trayIcon);
     tray.on("click", function (e) {
         if (mainWindow.isVisible()) {
             if (mainWindow.isFocused()) {
