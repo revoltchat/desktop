@@ -21,10 +21,6 @@ import { connectRPC, dropRPC } from "./lib/discordRPC";
 import { autoLaunch } from "./lib/autoLaunch";
 import { autoUpdate } from "./lib/updater";
 
-const WindowIcon = nativeImage.createFromPath(
-    path.join(__dirname, "../build/icons/icon.png"),
-);
-
 const trayIcon = nativeImage.createFromPath(
     path.resolve(
         App.getAppPath(),
@@ -61,7 +57,7 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         autoHideMenuBar: true,
         title: "Revolt",
-        icon: WindowIcon,
+        icon: "../build/icons/icon.png",
 
         frame: initialConfig.frame,
 
