@@ -57,7 +57,7 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         autoHideMenuBar: true,
         title: "Revolt",
-        icon: path.join(__dirname, "..", "build", "icons", "icon.png"),
+        icon: path.resolve(App.getAppPath(), "build", "icons", "icon.png"),
 
         frame: initialConfig.frame,
 
