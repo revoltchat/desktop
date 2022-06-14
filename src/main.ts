@@ -27,11 +27,16 @@ const trayIcon = nativeImage.createFromPath(
         "assets",
         // MacOS has special size and naming requirements for tray icons
         // https://stackoverflow.com/questions/41664208/electron-tray-icon-change-depending-on-dark-theme/41998326#41998326
-        process.platform == "darwin" ? "iconTemplate.png" : "icon.png",
+        process.platform == "darwin" ? "iconTemplate.png" : "trayIcon.png",
     ),
 );
 
+const WindowIcon = nativeImage.createFromPath(
+    path.resolve(App.getAppPath(), "assets", "icon.png"),
+);
+
 trayIcon.setTemplateImage(true);
+WindowIcon.setTemplateImage(true);
 
 onStart();
 autoUpdate();
@@ -57,7 +62,7 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         autoHideMenuBar: true,
         title: "Revolt",
-        icon: path.resolve(App.getAppPath(), "build", "icons", "icon.png"),
+        icon: WindowIcon,
 
         frame: initialConfig.frame,
 
