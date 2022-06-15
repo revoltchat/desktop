@@ -27,7 +27,7 @@ const trayIcon = nativeImage.createFromPath(
         "assets",
         // MacOS has special size and naming requirements for tray icons
         // https://stackoverflow.com/questions/41664208/electron-tray-icon-change-depending-on-dark-theme/41998326#41998326
-        process.platform == "darwin" ? "iconTemplate.png" : "trayIcon.png",
+        process.platform === "darwin" ? "trayIconTemplate.png" : "trayIcon.png",
     ),
 );
 
