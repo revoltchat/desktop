@@ -21,16 +21,21 @@ import { connectRPC, dropRPC } from "./lib/discordRPC";
 import { autoLaunch } from "./lib/autoLaunch";
 import { autoUpdate } from "./lib/updater";
 
-const WindowIcon = nativeImage.createFromPath(
+const trayIcon = nativeImage.createFromPath(
     path.resolve(
         App.getAppPath(),
         "assets",
         // MacOS has special size and naming requirements for tray icons
         // https://stackoverflow.com/questions/41664208/electron-tray-icon-change-depending-on-dark-theme/41998326#41998326
-        process.platform == "darwin" ? "iconTemplate.png" : "icon.png",
+        process.platform === "darwin" ? "trayIconTemplate.png" : "trayIcon.png",
     ),
 );
 
+const WindowIcon = nativeImage.createFromPath(
+    path.resolve(App.getAppPath(), "assets", "icon.png"),
+);
+
+trayIcon.setTemplateImage(true);
 WindowIcon.setTemplateImage(true);
 
 onStart();
@@ -199,7 +204,7 @@ function createWindow() {
     /**
      * System tray
      */
-    const tray = new Tray(WindowIcon);
+    const tray = new Tray(trayIcon);
 
     function buildMenu() {
         tray.setContextMenu(
@@ -241,7 +246,7 @@ function createWindow() {
 
     buildMenu();
     tray.setToolTip("Revolt");
-    tray.setImage(WindowIcon);
+    tray.setImage(trayIcon);
     tray.on("click", function (e) {
         if (mainWindow.isVisible()) {
             if (mainWindow.isFocused()) {
