@@ -53,21 +53,16 @@ jobs:
       run: |
         yarn build:bundle
         yarn build:windows:nsis --publish never
-        yarn build:windows:appx --publish never
     - name: Pack Build Files
       run: |
-        mkdir D:\a\desktop\Revolt-windows
-        mv D:\a\desktop\desktop\dist\win-unpacked\* D:\a\desktop\Revolt-windows
         mkdir D:\a\desktop\Revolt-windows-Setup
-        mv D:\a\desktop\desktop\dist\*.exe D:\a\desktop\Revolt-windows-Setup
-        cd D:\a\desktop
-        7z a -tzip Revolt-windows-Setup.zip Revolt-windows-Setup\
+        mv D:\a\desktop\desktop\dist\*.exe D:\a\desktop\Revolt-windows-Setup\Revolt-windows-Setup.exe
     - name: Publish Installer
       uses: svenstaro/upload-release-action@2.3.0
       with:
         repo_token: ${{ secrets.GH_TOKEN }}
-        file: D:\a\desktop\Revolt-windows-Setup.zip
-        asset_name: Revolt-windows-Setup.zip
+        file: D:\a\desktop\Revolt-windows-Setup\Revolt-windows-Setup.exe
+        asset_name: Revolt-windows-Setup.exe
 
   publish-macos:
 
