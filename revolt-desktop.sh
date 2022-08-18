@@ -1,3 +1,3 @@
 #!/bin/bash
 
-exec electron /usr/lib/revolt-desktop/app.asar "$@"
+exec electron17 /usr/lib/revolt-desktop/app.asar "$@"
