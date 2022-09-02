@@ -1,10 +1,8 @@
 name: Publish Packages
 
 on:
-  push:
-    tags:
-      - v*
-
+  release:
+    types: [published]
   workflow_dispatch:
 
 jobs:
@@ -17,11 +15,28 @@ jobs:
       run: yarn install
     - name: Build For Linux
       id: build-linux
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         yarn build:bundle
-        yarn release
+        yarn build:linux:tar --publish never
+        yarn build:linux:appimage --publish never
+    - name: Pack Build Files
+      run: |
+        mkdir ~/Revolt-linux-AppImage
+        mv dist/*.AppImage ~/Revolt-linux-AppImage/Revolt-linux.AppImage
+        mkdir ~/Revolt-linux
+        mv dist/*.tar.gz ~/Revolt-linux/Revolt-linux.tar.gz
+    - name: Publish AppImage
+      uses: svenstaro/upload-release-action@2.3.0
+      with:
+        repo_token: ${{ secrets.GH_TOKEN }}
+        file: /home/runner/Revolt-linux-AppImage/Revolt-linux.AppImage
+        asset_name: Revolt-linux.AppImage
+    - name: Publish Tarfile
+      uses: svenstaro/upload-release-action@2.3.0
+      with:
+        repo_token: ${{ secrets.GH_TOKEN }}
+        file: /home/runner/Revolt-linux/Revolt-linux.tar.gz
+        asset_name: Revolt-linux.tar.gz
 
   publish-windows:
 
@@ -35,11 +50,19 @@ jobs:
       run: yarn install
     - name: Build For Windows
       id: build-windows
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         yarn build:bundle
-        yarn release
+        yarn build:windows:nsis --publish never
+    - name: Pack Build Files
+      run: |
+        mkdir D:\a\desktop\Revolt-windows-Setup
+        mv D:\a\desktop\desktop\dist\*.exe D:\a\desktop\Revolt-windows-Setup\Revolt-windows-Setup.exe
+    - name: Publish Installer
+      uses: svenstaro/upload-release-action@2.3.0
+      with:
+        repo_token: ${{ secrets.GH_TOKEN }}
+        file: D:\a\desktop\Revolt-windows-Setup\Revolt-windows-Setup.exe
+        asset_name: Revolt-windows-Setup.exe
 
   publish-macos:
 
@@ -49,9 +72,23 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install Yarn
       run: yarn install
+    - name: Install Tools
+      run: brew update && brew install create-dmg
     - name: Build For macOS
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         yarn build:bundle
-        yarn release
+        yarn build:mac --publish never
+    - name: Create DMG
+      run: |
+        mkdir dmg-files/source_folder
+        mv dist/mac-universal/* dmg-files/source_folder
+        cd dmg-files
+        chmod +x makedmg.sh
+        ./makedmg.sh
+        mv Revolt-Installer.dmg ~
+    - name: Publish DMG
+      uses: svenstaro/upload-release-action@2.3.0
+      with:
+        repo_token: ${{ secrets.GH_TOKEN }}
+        file: /Users/runner/Revolt-Installer.dmg
+        asset_name: Revolt-macOS.dmg
