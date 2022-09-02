@@ -270,7 +270,13 @@ if (!acquiredLock) {
 } else {
     App.on("second-instance", () => {
         if (mainWindow) {
+            // Restore from tray if hidden
+            if (!mainWindow.isVisible()) mainWindow.show();
+
+            // Restore from taskbar if minimised
             if (mainWindow.isMinimized()) mainWindow.restore();
+
+            // Then focus the window
             mainWindow.focus();
         }
     });
