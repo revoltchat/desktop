@@ -298,7 +298,6 @@ App.on("window-all-closed", function () {
     if (app.shouldRelaunch) {
         const options: RelaunchOptions = {
             args: process.argv.slice(1).concat(["--relaunch"]),
-            execPath: process.execPath,
         };
 
         if (App.isPackaged && process.env.APPIMAGE) {
