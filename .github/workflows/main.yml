@@ -81,20 +81,11 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install Yarn
       run: yarn install
-    - name: Install Tools
-      run: brew update && brew install create-dmg
     - name: Build For macOS
       run: |
         yarn build:bundle
         yarn build:mac --publish never
-    - name: Create DMG
-      run: |
-        mkdir dmg-files/source_folder
-        mv dist/mac-universal/* dmg-files/source_folder
-        cd dmg-files
-        chmod +x makedmg.sh
-        ./makedmg.sh
-        mv Revolt-Installer.dmg ~
+        mv dist/*.dmg ~/Revolt-macOS.dmg
     - name: Publish Build Files
       uses: actions/upload-artifact@v2
       with:

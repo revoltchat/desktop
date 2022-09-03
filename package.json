@@ -26,12 +26,12 @@
     "repository": "revoltchat/desktop",
     "devDependencies": {
         "@types/auto-launch": "^5.0.2",
-        "@types/discord-rpc": "^4.0.3",
-        "dotenv-cli": "^6.0.0",
-        "electron": "^22.0.0",
-        "electron-builder": "^23.6.0",
-        "node-gyp": "^9.3.0",
-        "prettier": "^2.8.0",
+        "@types/discord-rpc": "^4.0.1",
+        "dotenv-cli": "^5.0.0",
+        "electron": "^17.1.0",
+        "electron-builder": "^23.0.8",
+        "node-gyp": "^9.0.0",
+        "prettier": "^2.6.2",
         "rimraf": "^3.0.2",
         "tsc-watch": "^5.0.3",
         "typescript": "^4.9.3"
@@ -56,7 +56,8 @@
                     ]
                 }
             ],
-            "category": "public.app-category.social-networking"
+            "category": "public.app-category.social-networking",
+            "files": "!node_modules/**/*.{mk,a,o,h}"
         },
         "linux": {
             "target": [
@@ -120,6 +121,28 @@
         },
         "publish": {
             "provider": "github"
+        },
+        "dmg": {
+            "background": "build/dmg/background.png",
+            "icon": "build/dmg/icon.icns",
+            "iconSize": 80,
+            "window": {
+                "x": 200,
+                "y": 120
+            },
+            "contents": [
+                {
+                    "x": 125,
+                    "y": 185,
+                    "type": "file"
+                },
+                {
+                    "x": 375,
+                    "y": 185,
+                    "type": "link",
+                    "path": "/Applications"
+                }
+            ]
         }
     },
     "dependencies": {
