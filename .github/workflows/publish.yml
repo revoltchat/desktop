@@ -51,6 +51,6 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
-        yarn build:bundle
+        PYTHON_PATH=/usr/bin/python3 yarn build:bundle
         yarn release
         
