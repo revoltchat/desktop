@@ -17,49 +17,87 @@
         "eb": "electron-builder",
         "ci": "electron-builder --publish onTagOrDraft",
         "release": "dotenv -e .env electron-builder --publish always",
-        "build:linux:tar": "electron-builder -l tar.gz",
-        "build:linux:unpacked": "electron-builder -l dir",
-        "build:linux:appimage": "electron-builder -l AppImage",
-        "build:mac": "electron-builder --mac --universal",
-        "build:windows:nsis": "electron-builder -w nsis",
-        "build:windows:appx": "electron-builder -w appx",
+        "build:linux": "electron-builder -l",
+        "build:mac": "electron-builder -m",
+        "build:windows": "electron-builder -w",
         "clean": "rimraf dist",
         "fmt": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'"
     },
     "repository": "revoltchat/desktop",
     "devDependencies": {
         "@types/auto-launch": "^5.0.2",
-        "@types/discord-rpc": "^4.0.1",
-        "dotenv-cli": "^5.0.0",
-        "electron": "^17.1.0",
-        "electron-builder": "^22.14.13",
-        "node-gyp": "^9.0.0",
-        "prettier": "^2.6.2",
+        "@types/discord-rpc": "^4.0.3",
+        "dotenv-cli": "^6.0.0",
+        "electron": "^22.0.0",
+        "electron-builder": "^23.6.0",
+        "node-gyp": "^9.3.0",
+        "prettier": "^2.8.0",
         "rimraf": "^3.0.2",
-        "tsc-watch": "^4.6.0",
-        "typescript": "^4.5.5"
+        "tsc-watch": "^5.0.3",
+        "typescript": "^4.9.3"
     },
     "build": {
         "appId": "chat.revolt.app",
         "productName": "Revolt",
         "mac": {
             "target": [
-                "zip",
-                "dmg"
+                {
+                    "target": "zip",
+                    "arch": [
+                        "x64",
+                        "arm64"
+                    ]
+                },
+                {
+                    "target": "dmg",
+                    "arch": [
+                        "x64",
+                        "arm64"
+                    ]
+                }
             ],
             "category": "public.app-category.social-networking"
         },
         "linux": {
             "target": [
-                "AppImage",
-                "tar.gz"
+                {
+                    "target": "AppImage",
+                    "arch": [
+                        "x64",
+                        "ia32",
+                        "armv7l",
+                        "arm64"
+                    ]
+                },
+                {
+                    "target": "tar.gz",
+                    "arch": [
+                        "x64",
+                        "ia32",
+                        "armv7l",
+                        "arm64"
+                    ]
+                }
             ],
             "category": "Network"
         },
         "win": {
             "target": [
-                "nsis",
-                "appx"
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "x64",
+                        "ia32",
+                        "arm64"
+                    ]
+                },
+                {
+                    "target": "appx",
+                    "arch": [
+                        "x64",
+                        "arm64"
+                    ]
+                }
             ]
         },
         "appx": {
@@ -76,8 +114,8 @@
     "dependencies": {
         "auto-launch": "^5.0.5",
         "discord-rpc": "npm:@insertish/discord-rpc@*",
-        "electron-store": "^8.0.1",
-        "electron-updater": "^4.6.5",
+        "electron-store": "^8.1.0",
+        "electron-updater": "^5.3.0",
         "electron-window-state": "^5.0.3"
     },
     "packageManager": "yarn@3.2.0"

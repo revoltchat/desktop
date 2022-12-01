@@ -21,6 +21,8 @@ import { connectRPC, dropRPC } from "./lib/discordRPC";
 import { autoLaunch } from "./lib/autoLaunch";
 import { autoUpdate } from "./lib/updater";
 
+let forceQuit = false;
+
 const trayIcon = nativeImage.createFromPath(
     path.resolve(
         App.getAppPath(),
@@ -98,6 +100,7 @@ function createWindow() {
 
     mainWindow.on("close", (event) => {
         if (
+            !forceQuit &&
             !app.shouldQuit &&
             !app.shouldRelaunch &&
             getConfig().minimiseToTray
@@ -112,6 +115,11 @@ function createWindow() {
             event.preventDefault();
             mainWindow.webContents.setZoomLevel(
                 mainWindow.webContents.getZoomLevel() + 1,
+            );
+        } else if (input.control && input.key === "-") {
+            event.preventDefault();
+            mainWindow.webContents.setZoomLevel(
+                mainWindow.webContents.getZoomLevel() - 1,
             );
         }
     });
@@ -247,17 +255,6 @@ function createWindow() {
     buildMenu();
     tray.setToolTip("Revolt");
     tray.setImage(trayIcon);
-    tray.on("click", function (e) {
-        if (mainWindow.isVisible()) {
-            if (mainWindow.isFocused()) {
-                mainWindow.hide();
-            } else {
-                mainWindow.focus();
-            }
-        } else {
-            mainWindow.show();
-        }
-    });
 }
 
 /**
@@ -286,10 +283,19 @@ if (!acquiredLock) {
         createWindow();
 
         App.on("activate", function () {
-            if (BrowserWindow.getAllWindows().length === 0) createWindow();
+            if (BrowserWindow.getAllWindows().length === 0) {
+                createWindow();
+            } else {
+                if (!mainWindow.isVisible()) mainWindow.show();
+                else mainWindow.hide();
+            }
         });
     });
 }
+
+app.on("before-quit", () => {
+    forceQuit = true;
+});
 
 /**
  * Close out application unless if instructed to relaunch.
