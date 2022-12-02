@@ -77,15 +77,6 @@
                         "armv7l",
                         "arm64"
                     ]
-                },
-                {
-                    "target": "pacman",
-                    "arch": [
-                        "x64",
-                        "ia32",
-                        "armv7l",
-                        "arm64"
-                    ]
                 }
             ],
             "category": "InstantMessaging",
@@ -126,11 +117,6 @@
             "identityName": "40345RevoltCommunications.revolt.chat",
             "publisher": "CN=B040CC7E-0016-4AF5-957F-F8977A6CFA3B",
             "publisherDisplayName": "Revolt Communications"
-        },
-        "pacman": {
-            "depends": [
-                "electron22"
-            ]
         },
         "publish": {
             "provider": "github"
