@@ -10,11 +10,11 @@ import {
     Menu,
     MenuItem,
 } from "electron";
-import { execFile } from "child_process";
+import { execFile } from "node:child_process";
 import windowStateKeeper from "electron-window-state";
 import { RelaunchOptions } from "electron/main";
-import { URL } from "url";
-import path from "path";
+import { URL } from "node:url";
+import path from "node:path";
 
 import { firstRun, getConfig, store, onStart, getBuildURL } from "./lib/config";
 import { connectRPC, dropRPC } from "./lib/discordRPC";
