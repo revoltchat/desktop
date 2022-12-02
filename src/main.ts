@@ -286,8 +286,8 @@ if (!acquiredLock) {
             if (BrowserWindow.getAllWindows().length === 0) {
                 createWindow();
             } else {
-                if (!mainWindow.isVisible()) mainWindow.show();
-                else mainWindow.hide();
+                if (!mainWindow.isVisible()) return mainWindow.show();
+                else return mainWindow.focus();
             }
         });
     });
