@@ -11,12 +11,12 @@
     "homepage": "https://revolt.chat",
     "main": "bundle/main.js",
     "scripts": {
-        "build:bundle": "tsc",
-        "watch:bundle": "tsc-watch",
         "start": "electron .",
         "eb": "electron-builder",
         "ci": "electron-builder --publish onTagOrDraft",
         "release": "dotenv -e .env electron-builder --publish always",
+        "watch:bundle": "tsc-watch",
+        "build:bundle": "tsc",
         "build:linux": "electron-builder -l",
         "build:mac": "electron-builder -m",
         "build:windows": "electron-builder -w",
@@ -79,7 +79,17 @@
                     ]
                 }
             ],
-            "category": "Network"
+            "category": "InstantMessaging",
+            "desktop": {
+                "Name": "Revolt",
+                "Comment": "User-first, privacy focused chat platform.",
+                "Exec": "revolt-desktop",
+                "Terminal": false,
+                "Type": "Application",
+                "Icon": "revolt-desktop",
+                "Categories": "InstantMessaging",
+                "StartupWMClass": "RevoltDesktop"
+            }
         },
         "win": {
             "target": [
@@ -100,7 +110,11 @@
                 }
             ]
         },
+        "dmg": {
+            "backgroundColor": "#101823"
+        },
         "appx": {
+            "backgroundColor": "#101823",
             "displayName": "Revolt Chat",
             "applicationId": "revolt.chat",
             "identityName": "40345RevoltCommunications.revolt.chat",
@@ -118,5 +132,5 @@
         "electron-updater": "^5.3.0",
         "electron-window-state": "^5.0.3"
     },
-    "packageManager": "yarn@3.2.0"
+    "packageManager": "yarn@3.3.0"
 }
