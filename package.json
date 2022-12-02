@@ -110,11 +110,8 @@
                 }
             ]
         },
-        "dmg": {
-            "backgroundColor": "#101823"
-        },
         "appx": {
-            "backgroundColor": "#101823",
+            "backgroundColor": "#0F1823",
             "displayName": "Revolt Chat",
             "applicationId": "revolt.chat",
             "identityName": "40345RevoltCommunications.revolt.chat",
