@@ -45,10 +45,9 @@ yarn start
 | `yarn clean`        | Cleans the application bundle.                                                      |
 
 There are also numerous OS-specific commands related to building and testing, all prefixed with `yarn`:
- - `build:linux:tar`, `build:linux:unpacked`, `build:linux:appimage`, `build:mac`, `build:windows:nsis`, `build:windows:appx`
-    - Builds the application for the specified platform and packaging format.
- - `test:linux:appimage`
-    - Runs the newest build of the Linux AppImage.
+
+-   `build:linux` `build:mac`, `build:windows`
+    -   Builds the application for the specified platform.
 
 ## License
 

@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Revolt
-Comment=User-first, privacy focused chat platform.
-Exec=revolt-desktop
-Terminal=false
-Type=Application
-Icon=revolt-desktop
-Categories=Network;InstantMessaging
-StartupWMClass=RevoltDesktop
