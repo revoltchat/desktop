@@ -57,7 +57,7 @@ jobs:
         mkdir D:\a\desktop\Revolt-windows
         mv D:\a\desktop\desktop\dist\win-unpacked\* D:\a\desktop\Revolt-windows
         mkdir D:\a\desktop\Revolt-windows-Setup
-        mv D:\a\desktop\desktop\dist\*.exe D:\a\desktop\Revolt-windows-Setup
+        mv D:\a\desktop\desktop\dist\*.exe D:\a\desktop\Revolt-windows-Setup.exe
     - name: Publish Zipfile
       uses: actions/upload-artifact@v3
       with:
@@ -66,7 +66,7 @@ jobs:
     - name: Publish Installer
       uses: actions/upload-artifact@v3
       with:
-        path: D:\a\desktop\Revolt-windows-Setup\Revolt-windows-Setup.exe
+        path: D:\a\desktop\Revolt-windows-Setup.exe
         name: Revolt-windows-Setup
   build-macos:
 
