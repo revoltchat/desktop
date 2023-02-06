@@ -13,15 +13,14 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Install Yarn
       run: yarn install
     - name: Build For Linux
       id: build-linux
       run: |
         yarn build:bundle
-        yarn build:linux:tar.gz --publish never
-        yarn build:linux:AppImage --publish never
+        yarn build:linux --publish never
     - name: Pack Build Files
       run: |
         mkdir ~/Revolt-linux-AppImage
@@ -43,7 +42,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Enable Developer Command Prompt
       uses: ilammy/msvc-dev-cmd@v1.10.0
     - name: Install Yarn
@@ -52,8 +51,7 @@ jobs:
       id: build-windows
       run: |
         yarn build:bundle
-        yarn build:win:nsis --publish never
-        yarn build:win:appx --publish never
+        yarn build:win --publish never
     - name: Pack Build Files
       run: |
         mkdir D:\a\desktop\Revolt-windows
@@ -78,7 +76,7 @@ jobs:
     runs-on: macos-11
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Install Yarn
       run: yarn install
     - name: Build For macOS
