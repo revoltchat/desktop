@@ -12,7 +12,7 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Install Yarn
       run: yarn install
     - name: Build For Linux
@@ -27,9 +27,9 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Enable Developer Command Prompt
-      uses: ilammy/msvc-dev-cmd@v1.10.0
+      uses: ilammy/msvc-dev-cmd@v1.12.1
     - name: Install Yarn
       run: yarn install
     - name: Build For Windows
@@ -44,13 +44,13 @@ jobs:
     runs-on: macos-11
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Install Yarn
       run: yarn install
     - name: Build For macOS
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
-        PYTHON_PATH=/usr/bin/python3 yarn build:bundle
+        yarn build:bundle
         yarn release
         
