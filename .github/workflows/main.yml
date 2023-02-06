@@ -30,11 +30,13 @@ jobs:
     - name: Publish AppImage
       uses: actions/upload-artifact@v3
       with:
-        path: ~/Revolt-linux-AppImage/*.AppImage
+        path: ~/Revolt-linux-AppImage
+        name: Revolt-linux-AppImage
     - name: Publish Tarfile
       uses: actions/upload-artifact@v3
       with:
-        path: ~/Revolt-linux/*.tar.gz
+        path: ~/Revolt-linux/
+        name: Revolt-linux
   build-windows:
 
     runs-on: windows-latest
@@ -56,18 +58,15 @@ jobs:
         mv D:\a\desktop\desktop\dist\win-unpacked\* D:\a\desktop\Revolt-windows
         mkdir D:\a\desktop\Revolt-windows-Setup
         mv D:\a\desktop\desktop\dist\*.exe D:\a\desktop\Revolt-windows-Setup
-        cd D:\a\desktop
-        7z a -tzip Revolt-windows.zip Revolt-windows\
-        7z a -tzip Revolt-windows-Setup.zip Revolt-windows-Setup\
     - name: Publish Zipfile
       uses: actions/upload-artifact@v3
       with:
-        path: D:\a\desktop\Revolt-windows.zip
+        path: D:\a\desktop\Revolt-windows
         name: Revolt-windows
     - name: Publish Installer
       uses: actions/upload-artifact@v3
       with:
-        path: D:\a\desktop\Revolt-windows-Setup.zip
+        path: D:\a\desktop\Revolt-windows-Setup\Revolt-windows-Setup.exe
         name: Revolt-windows-Setup
   build-macos:
 
