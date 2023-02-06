@@ -33,7 +33,7 @@ jobs:
         path: ~/Revolt-linux-AppImage/*.AppImage
         name: Revolt-linux-AppImage
     - name: Publish Tarfile
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         path: ~/Revolt-linux/*.tar.gz
         name: Revolt-linux
@@ -62,12 +62,12 @@ jobs:
         7z a -tzip Revolt-windows.zip Revolt-windows\
         7z a -tzip Revolt-windows-Setup.zip Revolt-windows-Setup\
     - name: Publish Zipfile
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         path: D:\a\desktop\Revolt-windows.zip
         name: Revolt-windows
     - name: Publish Installer
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         path: D:\a\desktop\Revolt-windows-Setup.zip
         name: Revolt-windows-Setup
@@ -85,7 +85,7 @@ jobs:
         yarn build:mac --publish never
         mv dist/*-universal.dmg ~/Revolt-macOS-universal.dmg
     - name: Publish Build Files
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         path: ~/Revolt-macOS-universal.dmg
         name: Revolt-macOS-universal
