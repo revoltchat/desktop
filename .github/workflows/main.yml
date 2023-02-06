@@ -84,10 +84,10 @@ jobs:
     - name: Build For macOS
       run: |
         yarn build:bundle
-        PYTHON_PATH=/usr/bin/python3 yarn build:mac --publish never
-        mv dist/*.dmg ~/Revolt-macOS.dmg
+        yarn build:mac --publish never
+        mv dist/*-universal.dmg ~/Revolt-macOS-universal.dmg
     - name: Publish Build Files
       uses: actions/upload-artifact@v2
       with:
-        path: ~/Revolt-macOS.dmg
-        name: Revolt-macOS
+        path: ~/Revolt-macOS-universal.dmg
+        name: Revolt-macOS-universal
