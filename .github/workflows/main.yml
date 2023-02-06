@@ -28,15 +28,13 @@ jobs:
         mkdir ~/Revolt-linux
         mv dist/*.tar.gz ~/Revolt-linux
     - name: Publish AppImage
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         path: ~/Revolt-linux-AppImage/*.AppImage
-        name: Revolt-linux-AppImage
     - name: Publish Tarfile
       uses: actions/upload-artifact@v3
       with:
         path: ~/Revolt-linux/*.tar.gz
-        name: Revolt-linux
   build-windows:
 
     runs-on: windows-latest
@@ -44,14 +42,14 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Enable Developer Command Prompt
-      uses: ilammy/msvc-dev-cmd@v1.10.0
+      uses: ilammy/msvc-dev-cmd@v1.12.1
     - name: Install Yarn
       run: yarn install
     - name: Build For Windows
       id: build-windows
       run: |
         yarn build:bundle
-        yarn build:win --publish never
+        yarn build:windows --publish never
     - name: Pack Build Files
       run: |
         mkdir D:\a\desktop\Revolt-windows
