@@ -20,8 +20,8 @@ jobs:
       id: build-linux
       run: |
         yarn build:bundle
-        yarn build:linux:tar --publish never
-        yarn build:linux:appimage --publish never
+        yarn build:linux:tar.gz --publish never
+        yarn build:linux:AppImage --publish never
     - name: Pack Build Files
       run: |
         mkdir ~/Revolt-linux-AppImage
@@ -52,8 +52,8 @@ jobs:
       id: build-windows
       run: |
         yarn build:bundle
-        yarn build:windows:nsis --publish never
-        yarn build:windows:appx --publish never
+        yarn build:win:nsis --publish never
+        yarn build:win:appx --publish never
     - name: Pack Build Files
       run: |
         mkdir D:\a\desktop\Revolt-windows

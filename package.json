@@ -18,7 +18,7 @@
         "watch:bundle": "tsc-watch",
         "build:bundle": "tsc",
         "build:linux": "electron-builder -l",
-        "build:mac": "electron-builder -m --universal",
+        "build:mac": "electron-builder -m",
         "build:windows": "electron-builder -w",
         "clean": "rimraf dist",
         "fmt": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'"
@@ -44,15 +44,13 @@
                 {
                     "target": "zip",
                     "arch": [
-                        "x64",
-                        "arm64"
+                        "universal"
                     ]
                 },
                 {
                     "target": "dmg",
                     "arch": [
-                        "x64",
-                        "arm64"
+                        "universal"
                     ]
                 }
             ],
