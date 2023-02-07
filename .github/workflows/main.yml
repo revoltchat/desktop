@@ -58,6 +58,8 @@ jobs:
         mv D:\a\desktop\desktop\dist\win-unpacked\* D:\a\desktop\Revolt-windows
         mkdir D:\a\desktop\Revolt-windows-Setup
         mv D:\a\desktop\desktop\dist\*.exe D:\a\desktop\Revolt-windows-Setup.exe
+        mkdir D:\a\desktop\Revolt-windows-appx
+        mv D:\a\desktop\desktop\dist*.appx D:\a\desktop\Revolt-windows-appx
     - name: Publish Zipfile
       uses: actions/upload-artifact@v3
       with:
@@ -68,6 +70,11 @@ jobs:
       with:
         path: D:\a\desktop\Revolt-windows-Setup.exe
         name: Revolt-windows-Setup
+    - name: Publish Appx
+      uses: actions/upload-artifact@v3
+      with:
+        path: D:\a\desktop\Revolt-windows-appx
+        name: Revolt-windows-appx
   build-macos:
 
     runs-on: macos-11
