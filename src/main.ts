@@ -90,7 +90,12 @@ function createWindow() {
     }
 
     mainWindowState.manage(mainWindow);
-    mainWindow.loadURL(getBuildURL());
+    if (app.commandLine.hasSwitch('server')) {
+        mainWindow.loadURL(app.commandLine.getSwitchValue('server'));
+    }
+    else {
+        mainWindow.loadURL(getBuildURL());
+    }
 
     /**
      * Window events
