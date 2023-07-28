@@ -44,19 +44,18 @@
                 {
                     "target": "zip",
                     "arch": [
-                        "x64",
-                        "arm64"
+                        "universal"
                     ]
                 },
                 {
                     "target": "dmg",
                     "arch": [
-                        "x64",
-                        "arm64"
+                        "universal"
                     ]
                 }
             ],
-            "category": "public.app-category.social-networking"
+            "category": "public.app-category.social-networking",
+            "files": "!node_modules/**/*.{mk,a,o,h}"
         },
         "linux": {
             "target": [
@@ -64,7 +63,6 @@
                     "target": "AppImage",
                     "arch": [
                         "x64",
-                        "ia32",
                         "armv7l",
                         "arm64"
                     ]
@@ -73,7 +71,6 @@
                     "target": "tar.gz",
                     "arch": [
                         "x64",
-                        "ia32",
                         "armv7l",
                         "arm64"
                     ]
@@ -120,6 +117,28 @@
         },
         "publish": {
             "provider": "github"
+        },
+        "dmg": {
+            "background": "build/dmg/background.png",
+            "icon": "build/dmg/icon.icns",
+            "iconSize": 80,
+            "window": {
+                "x": 200,
+                "y": 120
+            },
+            "contents": [
+                {
+                    "x": 125,
+                    "y": 185,
+                    "type": "file"
+                },
+                {
+                    "x": 375,
+                    "y": 185,
+                    "type": "link",
+                    "path": "/Applications"
+                }
+            ]
         }
     },
     "dependencies": {
