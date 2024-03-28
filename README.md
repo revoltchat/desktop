@@ -1,5 +1,9 @@
 # Revolt Desktop
 
+## ⚠️ Deprecation notice ⚠️
+
+This project will soon be deprecated in favour of a new desktop app built with Tauri. You can follow progress [here](https://github.com/revoltchat/frontend/issues/14).
+
 ## Description
 
 This is a desktop application for Revolt built on Electron.
