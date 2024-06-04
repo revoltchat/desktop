@@ -3,22 +3,22 @@ import type { ConfigData } from "./app";
 import {
     app as App,
     BrowserWindow,
-    shell,
-    ipcMain,
-    nativeImage,
-    Tray,
     Menu,
     MenuItem,
+    Tray,
+    ipcMain,
+    nativeImage,
+    shell,
 } from "electron";
-import { execFile } from "node:child_process";
 import windowStateKeeper from "electron-window-state";
 import { RelaunchOptions } from "electron/main";
-import { URL } from "node:url";
+import { execFile } from "node:child_process";
 import path from "node:path";
+import { URL } from "node:url";
 
-import { firstRun, getConfig, store, onStart, getBuildURL } from "./lib/config";
-import { connectRPC, dropRPC } from "./lib/discordRPC";
 import { autoLaunch } from "./lib/autoLaunch";
+import { firstRun, getBuildURL, getConfig, onStart, store } from "./lib/config";
+import { connectRPC, dropRPC } from "./lib/discordRPC";
 import { autoUpdate } from "./lib/updater";
 
 let forceQuit = false;
@@ -103,6 +103,7 @@ function createWindow() {
             !forceQuit &&
             !app.shouldQuit &&
             !app.shouldRelaunch &&
+            process.platform !== "darwin" &&
             getConfig().minimiseToTray
         ) {
             event.preventDefault();
