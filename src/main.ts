@@ -60,7 +60,6 @@ function createWindow() {
         defaultWidth: 1280,
         defaultHeight: 720,
     });
-
     mainWindow = new BrowserWindow({
         autoHideMenuBar: true,
         title: "Revolt",
@@ -72,6 +71,9 @@ function createWindow() {
             preload: path.resolve(App.getAppPath(), "bundle", "app.js"),
             contextIsolation: true,
             nodeIntegration: false,
+	    //spellcheck needs to be set to true to initilze values
+	    //if set to false toggle won't work properly
+	    spellcheck: true,
         },
 
         x: mainWindowState.x,
@@ -84,6 +86,8 @@ function createWindow() {
         minWidth: 300,
         minHeight: 300,
     });
+    //sets value to whatever the previous state was defualt is same as webPref
+    mainWindow.webContents.session.setSpellCheckerEnabled(store.get("spellcheck",true));
 
     if (process.platform === "win32") {
         App.setAppUserModelId(mainWindow.title);
@@ -159,7 +163,18 @@ function createWindow() {
                 }),
             );
         }
-
+	menu.append(
+		new MenuItem({
+			label: "Toggle spellcheck",
+			click: ()=>{
+				//to improve readability, stores current state of spell check
+	 			let isSpellcheck = store.get("spellcheck",true);
+				mainWindow.webContents.session.setSpellCheckerEnabled(!isSpellcheck);
+				//stores spellcheck state locally to presist between session
+				store.set("spellcheck",!isSpellcheck);
+			},
+		}),
+	);
         if (menu.items.length > 0) {
             menu.popup();
         }
