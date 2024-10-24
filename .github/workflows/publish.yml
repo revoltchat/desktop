@@ -41,7 +41,7 @@ jobs:
         yarn release
   publish-macos:
 
-    runs-on: macos-11
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v3
