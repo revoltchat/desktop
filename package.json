@@ -1,6 +1,6 @@
 {
     "name": "revolt-desktop",
-    "version": "1.0.6",
+    "version": "1.0.8",
     "description": "Revolt desktop app",
     "private": true,
     "author": {
@@ -28,7 +28,7 @@
         "@types/auto-launch": "^5.0.2",
         "@types/discord-rpc": "^4.0.3",
         "dotenv-cli": "^6.0.0",
-        "electron": "^22.0.0",
+        "electron": "33",
         "electron-builder": "^23.6.0",
         "node-gyp": "^9.3.0",
         "prettier": "^2.8.0",

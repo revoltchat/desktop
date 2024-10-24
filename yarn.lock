@@ -218,10 +218,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^16.11.26":
-  version: 16.18.11
-  resolution: "@types/node@npm:16.18.11"
-  checksum: 2a3b1da13063debe6e26f732defb5f03ef4ef732c3e08daba838d8850433bd00e537ce1a97ce9bcfc4b15db5218d701d1265fae94e0d6926906bec157e6b46e0
+"@types/node@npm:^20.9.0":
+  version: 20.17.0
+  resolution: "@types/node@npm:20.17.0"
+  dependencies:
+    undici-types: ~6.19.2
+  checksum: 01234eb8a5ba7e3e4324f74c6b7354d8f37fc8eb29eddaf595bcf172bdfb32184be0a5721ee54bc8440562a4037f322eb967550e3b0b6402d0e14fcb7eb6d98b
   languageName: node
   linkType: hard
 
@@ -1238,16 +1240,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron@npm:^22.0.0":
-  version: 22.2.0
-  resolution: "electron@npm:22.2.0"
+"electron@npm:33":
+  version: 33.0.2
+  resolution: "electron@npm:33.0.2"
   dependencies:
     "@electron/get": ^2.0.0
-    "@types/node": ^16.11.26
+    "@types/node": ^20.9.0
     extract-zip: ^2.0.1
   bin:
     electron: cli.js
-  checksum: 096434fe95408928c86de4782e87fcad8b933043a9a7b5447e87964c6c597352584d413157cca43a9f1fd4bf669d2e344d6604ff5c499367e3ca6f1008e2fd5f
+  checksum: dc00b07e86a1eb721e3e9a124371582280b94c00f40f9ddedfcd77ee197d3393638eed6d9061afad81b69fca7c49a8d4f0bd56d13fcd5454ded87e4ecce71519
   languageName: node
   linkType: hard
 
@@ -2587,7 +2589,7 @@ __metadata:
     auto-launch: ^5.0.5
     discord-rpc: "npm:@insertish/discord-rpc@*"
     dotenv-cli: ^6.0.0
-    electron: ^22.0.0
+    electron: 33
     electron-builder: ^23.6.0
     electron-store: ^8.1.0
     electron-updater: ^5.3.0
@@ -3031,6 +3033,13 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 2eee5c37cad4390385db5db5a8e81470e42e8f1401b0358d7390095d6f681b410f2c4a0c496c6ff9ebd775423c7785cdace7bcdad76c7bee283df3d9718c0f20
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~6.19.2":
+  version: 6.19.8
+  resolution: "undici-types@npm:6.19.8"
+  checksum: de51f1b447d22571cf155dfe14ff6d12c5bdaec237c765085b439c38ca8518fc360e88c70f99469162bf2e14188a7b0bcb06e1ed2dc031042b984b0bb9544017
   languageName: node
   linkType: hard
 
