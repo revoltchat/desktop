@@ -36,7 +36,7 @@
         "tsc-watch": "^5.0.3",
         "typescript": "^4.9.3"
     },
-    "productName": "Revolt",
+    "productName": "Revolt Desktop",
     "build": {
         "appId": "chat.revolt.app",
         "mac": {
@@ -79,7 +79,7 @@
             "category": "InstantMessaging",
             "executableName": "revolt-desktop",
             "desktop": {
-                "Name": "Revolt",
+                "Name": "Revolt Desktop",
                 "Comment": "User-first, privacy focused chat platform.",
                 "Terminal": false,
                 "Type": "Application",
